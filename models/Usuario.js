@@ -8,6 +8,9 @@ const schema = mongoose.Schema({
     "EMAIL": String,	
     "HABILITADO": Boolean,
     "ADMIN": Boolean,
+    "FECHA_CREACION": Date,
+    "FOTO": String,
+    "SEXO": String,
 });
 
 export default mongoose.models.Usuario || mongoose.model('Usuario', schema);
