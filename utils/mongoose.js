@@ -1,13 +1,12 @@
 import { connect, connection } from 'mongoose';
 
 const conn = {
-    isConnected : false,
+    isConnected: false,
 }
 
 
 export async function dbConnect() {
-    const uri  = 'mongodb://localhost:27017/limefit'
-    // console.log(`uri - mongoose.js - 8`, '['+typeof(uri)+']'+uri);
+    const uri = 'mongodb://localhost:27017/limefit'
     if (conn.isConnected) return;
     const db = await connect(uri, {
         useNewUrlParser: true,
@@ -18,7 +17,7 @@ export async function dbConnect() {
 }
 
 
-// connection.on('error', console.error.bind(console, 'connection error:'));
-// connection.on('connected', () => {
-//     console.log('MongoDB connected');
-//     });
+connection.on('error', console.error.bind(console, 'connection error:'));
+connection.on('connected', () => {
+    console.log('MongoDB connected');
+});

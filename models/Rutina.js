@@ -5,7 +5,7 @@ const schema = mongoose.Schema({
     "NOMBRE": String,
     "DESCRIPCION": String,
     "EJERCICIOS": Array,
-    "HABILITADO": Boolean,
+    "HABILITADA": Boolean,
     "FECHA_CREACION": Date,
     "FECHA_MODIFICACION": Date,
     "USUARIO_CREACION": String,
@@ -13,7 +13,7 @@ const schema = mongoose.Schema({
     "DURACION" : Number,
     "DIFICULTAD" : Number,
     "IMAGEN" : String,
-    "NIVEL" : Array,
+    "NIVEL" : String,
 });
 
 export default mongoose.models.Rutina || mongoose.model('Rutina', schema);
