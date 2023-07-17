@@ -3,41 +3,41 @@ import Usuario from "models/Usuario";
 import Cors from 'cors'
 
 const cors = Cors({
-    methods: ['POST', 'GET', 'HEAD'],
-  })
+  methods: ['POST', 'GET', 'HEAD'],
+})
 
 function runMiddleware(req, res, fn) {
-    return new Promise((resolve, reject) => {
-      fn(req, res, (result) => {
-        if (result instanceof Error) {
-          return reject(result)
-        }
-  
-        return resolve(result)
-      })
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result)
+      }
+
+      return resolve(result)
     })
-  }
+  })
+}
 
 
 
 export default async function handler(req, res) {
-    await runMiddleware(req, res, cors)
-    console.log('aca', req.body);
-    dbConnect();
-    // res.status(200).json({ status: "ok" });
-    let body = JSON.parse(req.body);
-    let {dni} = body;
-    console.log("DNI consultado: ", dni);
-    try {
-        let filter = { "DNI": dni };
-        console.log("filter", filter);
-        let user = await Usuario.findOne(filter);
-        console.log("user", user);
-        res.status(200).json({ status: "ok", user: user });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json(error);
-    }
+  await runMiddleware(req, res, cors)
+  console.log('aca', req.body);
+  dbConnect();
+  // res.status(200).json({ status: "ok" });
+  let body = JSON.parse(req.body);
+  let { dni } = body;
+  console.log("DNI consultado: ", dni);
+  try {
+    let filter = { "DNI": dni };
+    console.log("filter", filter);
+    let user = await Usuario.findOne(filter);
+    console.log("user", user);
+    res.status(200).json({ status: "ok", user: user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
 
 }
 
