@@ -4,7 +4,7 @@ const schema = mongoose.Schema({
     "ID": Number, // "ID": "1
     "NOMBRE": String,
     "DESCRIPCION": String,
-    "EJERCICIOS": Array,
+    "DIAS": Array,
     "HABILITADA": Boolean,
     "FECHA_CREACION": Date,
     "FECHA_MODIFICACION": Date,
