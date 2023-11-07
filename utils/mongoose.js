@@ -1,12 +1,13 @@
 import { connect, connection } from 'mongoose';
-
+const uri = process.env.MONGODB_URI;
+console.log('uri', uri);
 const conn = {
     isConnected: false,
 }
 
-
 export async function dbConnect() {
-    const uri = 'mongodb://localhost:27017/limefit'
+    console.log('empieza dbConnect');
+
     if (conn.isConnected) return;
     const db = await connect(uri, {
         useNewUrlParser: true,
