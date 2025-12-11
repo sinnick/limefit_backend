@@ -1,4 +1,4 @@
-import { dbConnect } from "utils/mongoose";
+import dbConnect from "utils/mongoose";
 import Usuario from "models/Usuario";
 import Cors from 'cors'
 

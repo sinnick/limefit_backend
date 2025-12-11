@@ -1,38 +1,161 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# LimeFit - Gym Management System
 
-## Getting Started
+A modern, full-stack gym management application built with Next.js 15, featuring admin dashboards, user management, workout routines, and assignment tracking.
 
-First, run the development server:
+## ✨ Features
 
+### Admin Features
+- 👥 **User Management**: Create, edit, and manage gym members
+- 💪 **Routine Management**: Create and manage workout routines with difficulty levels
+- 📋 **Assignment System**: Assign routines to users and track their progress
+- 📊 **Dashboard**: Overview of system statistics and quick actions
+- 🔐 **Authentication**: Secure login with admin role-based access
+
+### Technical Stack
+- **Framework**: Next.js 15.1.3
+- **UI Library**: shadcn/ui with Radix UI primitives
+- **Styling**: Tailwind CSS with lime green accent theme (#84cc16)
+- **Authentication**: NextAuth.js with credentials provider
+- **Database**: MongoDB with Mongoose ODM
+- **State Management**: React hooks
+- **Icons**: Lucide React
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- MongoDB instance running locally or remotely
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository and install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+cd limefit_backend
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Set up environment variables:
+```bash
+cp .env.example .env
+```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Edit `.env` and configure:
+```env
+MONGODB_URI=mongodb://localhost:27017/limefit
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=<your-secret-key>
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Generate a secret key:
+```bash
+openssl rand -base64 32
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+3. Start the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Learn More
+## 👤 Creating an Admin User
 
-To learn more about Next.js, take a look at the following resources:
+You'll need to manually create an admin user in your MongoDB database with a hashed password.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Using MongoDB shell or a script:
+```javascript
+const bcrypt = require('bcryptjs');
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+db.usuarios.insertOne({
+  DNI: 12345678,
+  USUARIO: "admin",
+  PASSWORD: bcrypt.hashSync("admin123", 10),
+  NOMBRE: "Admin",
+  APELLIDO: "User",
+  EMAIL: "admin@limefit.com",
+  SEXO: "M",
+  ADMIN: true,
+  HABILITADO: true,
+  FECHA_CREACION: new Date(),
+  FOTO: ""
+})
+```
 
-## Deploy on Vercel
+Then login with:
+- **Username**: admin (or DNI: 12345678)
+- **Password**: admin123
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📁 Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+├── components/
+│   ├── admin/         # Admin-specific components
+│   └── ui/            # shadcn/ui components
+├── hooks/             # Custom React hooks
+├── lib/               # Utility functions
+├── models/            # Mongoose models
+│   ├── Usuario.js
+│   ├── Rutina.js
+│   ├── Record.js
+│   └── UsuarioRutina.js
+├── pages/
+│   ├── admin/         # Admin pages
+│   │   ├── index.jsx  # Dashboard
+│   │   ├── users.jsx  # User management
+│   │   ├── routines.jsx  # Routine management
+│   │   └── assignments.jsx  # Assignment management
+│   ├── api/           # API routes
+│   │   ├── auth/      # NextAuth
+│   │   └── admin/     # Admin APIs
+│   ├── login.jsx      # Login page
+│   └── index.js       # Home redirect
+├── styles/            # Global styles
+└── utils/             # Utility modules
+```
+
+## 🔌 API Routes
+
+### Authentication
+- `POST /api/auth/[...nextauth]` - NextAuth authentication endpoints
+
+### Admin Routes (Require admin authentication)
+- `GET/POST/PUT/DELETE /api/admin/users` - User management
+- `GET/POST/PUT/DELETE /api/admin/routines` - Routine management
+- `GET/POST/PUT/DELETE /api/admin/assignments` - Assignment management
+
+### Legacy Routes
+- `POST /api/login` - Legacy login endpoint
+- `GET /api/rutinas` - Get routines
+- `GET /api/records/list` - List user records
+
+## 🎨 Customization
+
+### Theme Colors
+The lime green theme is defined in:
+- `tailwind.config.js` - Tailwind color palette
+- `styles/globals.css` - CSS variables for light and dark modes
+
+Primary lime green color: **#84cc16** (HSL: 84 81% 44%)
+
+### UI Components
+All UI components are in `components/ui/` and can be customized as needed.
+
+## 🛠️ Development
+
+### Scripts
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+## 🔒 Security
+
+- Passwords are hashed using bcryptjs
+- Admin routes protected with NextAuth middleware
+- JWT sessions with configurable expiry
+- Environment variables for sensitive data
+
+## 📝 License
+
+Private - All rights reserved

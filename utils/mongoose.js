@@ -5,7 +5,7 @@ const conn = {
     isConnected: false,
 }
 
-export async function dbConnect() {
+async function dbConnect() {
     console.log('empieza dbConnect');
 
     if (conn.isConnected) return;
@@ -17,6 +17,7 @@ export async function dbConnect() {
     console.log('MongoDB connected, DB:', db.connection.db.databaseName);
 }
 
+export default dbConnect;
 
 connection.on('error', console.error.bind(console, 'connection error:'));
 connection.on('connected', () => {

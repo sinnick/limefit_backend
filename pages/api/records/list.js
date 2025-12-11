@@ -1,4 +1,4 @@
-import { dbConnect } from "utils/mongoose";
+import dbConnect from "utils/mongoose";
 import Record from "models/Record";
 import Cors from 'cors'
 

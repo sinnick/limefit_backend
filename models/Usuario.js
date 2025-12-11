@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema({
     "DNI": Number,
     "USUARIO": String,
+    "PASSWORD": String,
     "NOMBRE": String,
     "APELLIDO": String,
-    "EMAIL": String,	
+    "EMAIL": String,
     "HABILITADO": Boolean,
     "ADMIN": Boolean,
     "FECHA_CREACION": Date,
