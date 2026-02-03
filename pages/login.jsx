@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { signIn } from "next-auth/react"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -22,56 +23,28 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      // Get CSRF token first
-      const csrfRes = await fetch("/limefit/api/auth/csrf")
-      const { csrfToken } = await csrfRes.json()
-
-      // Call credentials callback directly
-      const res = await fetch("/limefit/api/auth/callback/credentials", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          csrfToken,
-          username: formData.username,
-          password: formData.password,
-          json: "true",
-        }),
+      // Use NextAuth signIn with explicit basePath
+      const result = await signIn("credentials", {
+        username: formData.username,
+        password: formData.password,
+        redirect: false,
       })
 
-      const data = await res.json()
+      console.log("SignIn result:", result)
 
-      if (data.error) {
+      if (result?.error) {
         toast({
           title: "Error de autenticación",
           description: "Usuario o contraseña incorrectos",
           variant: "destructive"
         })
-      } else if (data.url) {
+      } else if (result?.ok) {
         toast({
           title: "Inicio de sesión exitoso",
           description: "Redirigiendo..."
         })
-        router.push("/admin")
-      } else {
-        // Check if session was created
-        const sessionRes = await fetch("/limefit/api/auth/session")
-        const session = await sessionRes.json()
-        
-        if (session?.user) {
-          toast({
-            title: "Inicio de sesión exitoso",
-            description: "Redirigiendo..."
-          })
-          router.push("/admin")
-        } else {
-          toast({
-            title: "Error",
-            description: "No se pudo iniciar sesión",
-            variant: "destructive"
-          })
-        }
+        // Force a full page reload to /admin to ensure session is picked up
+        window.location.href = "/limefit/admin"
       }
     } catch (error) {
       console.error("Login error:", error)
