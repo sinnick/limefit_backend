@@ -57,7 +57,7 @@ export default function RoutinesPage() {
   })
   const { toast } = useToast()
 
-  const diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+  const diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
   const niveles = ["principiante", "medio", "avanzado"]
 
   useEffect(() => {
@@ -359,17 +359,27 @@ export default function RoutinesPage() {
               <div className="space-y-2">
                 <Label>Días de la semana</Label>
                 <div className="flex flex-wrap gap-2">
-                  {diasSemana.map(dia => (
-                    <Button
-                      key={dia}
-                      type="button"
-                      variant={formData.DIAS.includes(dia) ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => toggleDay(dia)}
-                    >
-                      {dia.substring(0, 3)}
-                    </Button>
-                  ))}
+                  {diasSemana.map(dia => {
+                    const isSelected = formData.DIAS.includes(dia)
+                    return (
+                      <button
+                        key={dia}
+                        type="button"
+                        className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                          isSelected 
+                            ? "bg-primary text-primary-foreground" 
+                            : "bg-muted text-muted-foreground hover:bg-muted/80"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          toggleDay(dia)
+                        }}
+                      >
+                        {dia.substring(0, 3)}
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
 
