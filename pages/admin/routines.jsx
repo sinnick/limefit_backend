@@ -27,7 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
-import { Plus, Edit, Trash2, Search, GripVertical } from "lucide-react"
+import { Plus, Edit, Trash2, Search } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const emptyExercise = {
@@ -292,7 +292,7 @@ export default function RoutinesPage() {
             </DialogHeader>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="nombre">Nombre de la rutina</Label>
                   <Input
@@ -300,6 +300,7 @@ export default function RoutinesPage() {
                     value={formData.NOMBRE}
                     onChange={(e) => setFormData({ ...formData, NOMBRE: e.target.value })}
                     placeholder="Ej: Full Body Principiante"
+                    className="h-12 text-base"
                     required
                   />
                 </div>
@@ -309,7 +310,7 @@ export default function RoutinesPage() {
                     value={formData.NIVEL}
                     onValueChange={(value) => setFormData({ ...formData, NIVEL: value })}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -330,18 +331,20 @@ export default function RoutinesPage() {
                   value={formData.DESCRIPCION}
                   onChange={(e) => setFormData({ ...formData, DESCRIPCION: e.target.value })}
                   placeholder="Breve descripción de la rutina"
+                  className="h-12 text-base"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Duración (minutos)</Label>
+                  <Label>Duración (min)</Label>
                   <Input
                     type="number"
                     value={formData.DURACION}
                     onChange={(e) => setFormData({ ...formData, DURACION: parseInt(e.target.value) || 60 })}
                     min="10"
                     max="180"
+                    className="h-12 text-base text-center"
                   />
                 </div>
                 <div className="space-y-2">
@@ -352,6 +355,7 @@ export default function RoutinesPage() {
                     onChange={(e) => setFormData({ ...formData, DIFICULTAD: parseInt(e.target.value) || 3 })}
                     min="1"
                     max="5"
+                    className="h-12 text-base text-center"
                   />
                 </div>
               </div>
@@ -393,62 +397,69 @@ export default function RoutinesPage() {
                 </div>
 
                 {formData.EJERCICIOS.length === 0 ? (
-                  <p className="text-sm text-muted-foreground text-center py-4 border rounded-lg border-dashed">
-                    No hay ejercicios. Haz click en «Agregar ejercicio» para comenzar.
+                  <p className="text-sm text-muted-foreground text-center py-6 border rounded-lg border-dashed">
+                    No hay ejercicios. Toca «Agregar ejercicio» para comenzar.
                   </p>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {formData.EJERCICIOS.map((ejercicio, index) => (
-                      <Card key={index} className="p-4">
-                        <div className="flex items-start gap-3">
-                          <div className="text-muted-foreground pt-2">
-                            <GripVertical className="h-5 w-5" />
+                      <Card key={index} className="p-4 bg-muted/30">
+                        <div className="space-y-3">
+                          {/* Header: número + eliminar */}
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-muted-foreground">
+                              Ejercicio {index + 1}
+                            </span>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => removeExercise(index)}
+                              className="text-red-500 hover:text-red-600 hover:bg-red-500/10 h-8 px-2"
+                            >
+                              <Trash2 className="h-4 w-4 mr-1" />
+                              Eliminar
+                            </Button>
                           </div>
-                          <div className="flex-1 grid grid-cols-12 gap-3">
-                            <div className="col-span-4">
-                              <Label className="text-xs">Ejercicio</Label>
-                              <Input
-                                value={ejercicio.nombre}
-                                onChange={(e) => updateExercise(index, "nombre", e.target.value)}
-                                placeholder="Ej: Press de banca"
-                              />
-                            </div>
-                            <div className="col-span-2">
-                              <Label className="text-xs">Series</Label>
+                          
+                          {/* Nombre del ejercicio - full width */}
+                          <Input
+                            value={ejercicio.nombre}
+                            onChange={(e) => updateExercise(index, "nombre", e.target.value)}
+                            placeholder="Nombre del ejercicio (ej: Press de banca)"
+                            className="text-base h-12"
+                          />
+                          
+                          {/* Series, Reps, Peso en fila */}
+                          <div className="grid grid-cols-3 gap-3">
+                            <div className="space-y-1">
+                              <Label className="text-xs text-muted-foreground">Series</Label>
                               <Input
                                 type="number"
                                 value={ejercicio.series}
                                 onChange={(e) => updateExercise(index, "series", parseInt(e.target.value) || 0)}
                                 min="1"
+                                className="text-center text-lg h-12 font-semibold"
                               />
                             </div>
-                            <div className="col-span-2">
-                              <Label className="text-xs">Reps</Label>
+                            <div className="space-y-1">
+                              <Label className="text-xs text-muted-foreground">Reps</Label>
                               <Input
                                 type="number"
                                 value={ejercicio.repeticiones}
                                 onChange={(e) => updateExercise(index, "repeticiones", parseInt(e.target.value) || 0)}
                                 min="1"
+                                className="text-center text-lg h-12 font-semibold"
                               />
                             </div>
-                            <div className="col-span-2">
-                              <Label className="text-xs">Peso</Label>
+                            <div className="space-y-1">
+                              <Label className="text-xs text-muted-foreground">Peso</Label>
                               <Input
                                 value={ejercicio.peso}
                                 onChange={(e) => updateExercise(index, "peso", e.target.value)}
-                                placeholder="20kg"
+                                placeholder="—"
+                                className="text-center text-lg h-12"
                               />
-                            </div>
-                            <div className="col-span-2 flex items-end">
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => removeExercise(index)}
-                                className="text-red-500 hover:text-red-600"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
                             </div>
                           </div>
                         </div>
