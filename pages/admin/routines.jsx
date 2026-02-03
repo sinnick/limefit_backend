@@ -56,7 +56,7 @@ export default function RoutinesPage() {
 
   async function fetchRoutines() {
     try {
-      const res = await fetch("/api/admin/routines")
+      const res = await fetch("/limefit/api/admin/routines")
       const data = await res.json()
       setRoutines(data)
     } catch (error) {
@@ -105,7 +105,7 @@ export default function RoutinesPage() {
 
     try {
       const method = editingRoutine ? "PUT" : "POST"
-      const res = await fetch("/api/admin/routines", {
+      const res = await fetch("/limefit/api/admin/routines", {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)

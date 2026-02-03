@@ -55,9 +55,9 @@ export default function AssignmentsPage() {
   async function fetchData() {
     try {
       const [assignmentsRes, usersRes, routinesRes] = await Promise.all([
-        fetch("/api/admin/assignments"),
-        fetch("/api/admin/users"),
-        fetch("/api/admin/routines")
+        fetch("/limefit/api/admin/assignments"),
+        fetch("/limefit/api/admin/users"),
+        fetch("/limefit/api/admin/routines")
       ])
 
       const assignmentsData = await assignmentsRes.json()
@@ -109,7 +109,7 @@ export default function AssignmentsPage() {
 
     try {
       const method = editingAssignment ? "PUT" : "POST"
-      const res = await fetch("/api/admin/assignments", {
+      const res = await fetch("/limefit/api/admin/assignments", {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

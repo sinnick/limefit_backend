@@ -56,7 +56,7 @@ export default function UsersPage() {
 
   async function fetchUsers() {
     try {
-      const res = await fetch("/api/admin/users")
+      const res = await fetch("/limefit/api/admin/users")
       const data = await res.json()
       setUsers(data)
     } catch (error) {
@@ -106,7 +106,7 @@ export default function UsersPage() {
 
     try {
       const method = editingUser ? "PUT" : "POST"
-      const res = await fetch("/api/admin/users", {
+      const res = await fetch("/limefit/api/admin/users", {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)

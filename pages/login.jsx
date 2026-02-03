@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { signIn } from "next-auth/react"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -23,28 +22,59 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      const result = await signIn("credentials", {
-        username: formData.username,
-        password: formData.password,
-        redirect: false
+      // Get CSRF token first
+      const csrfRes = await fetch("/limefit/api/auth/csrf")
+      const { csrfToken } = await csrfRes.json()
+
+      // Call credentials callback directly
+      const res = await fetch("/limefit/api/auth/callback/credentials", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          csrfToken,
+          username: formData.username,
+          password: formData.password,
+          json: "true",
+        }),
       })
 
-      if (result?.error) {
+      const data = await res.json()
+
+      if (data.error) {
         toast({
           title: "Error de autenticación",
           description: "Usuario o contraseña incorrectos",
           variant: "destructive"
         })
-      } else if (result?.ok) {
+      } else if (data.url) {
         toast({
           title: "Inicio de sesión exitoso",
           description: "Redirigiendo..."
         })
-
-        // Redirect to admin dashboard
         router.push("/admin")
+      } else {
+        // Check if session was created
+        const sessionRes = await fetch("/limefit/api/auth/session")
+        const session = await sessionRes.json()
+        
+        if (session?.user) {
+          toast({
+            title: "Inicio de sesión exitoso",
+            description: "Redirigiendo..."
+          })
+          router.push("/admin")
+        } else {
+          toast({
+            title: "Error",
+            description: "No se pudo iniciar sesión",
+            variant: "destructive"
+          })
+        }
       }
     } catch (error) {
+      console.error("Login error:", error)
       toast({
         title: "Error",
         description: "Ocurrió un error al iniciar sesión",

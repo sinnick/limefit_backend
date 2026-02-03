@@ -18,9 +18,9 @@ export default function AdminDashboard() {
     async function fetchStats() {
       try {
         const [usersRes, routinesRes, assignmentsRes] = await Promise.all([
-          fetch("/api/admin/users"),
-          fetch("/api/admin/routines"),
-          fetch("/api/admin/assignments")
+          fetch("/limefit/api/admin/users"),
+          fetch("/limefit/api/admin/routines"),
+          fetch("/limefit/api/admin/assignments")
         ])
 
         const users = await usersRes.json()

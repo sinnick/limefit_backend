@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster'
 
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={session} basePath="/limefit/api/auth">
       <Component {...pageProps} />
       <Toaster />
     </SessionProvider>
