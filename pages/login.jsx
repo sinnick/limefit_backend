@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/router"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -118,12 +119,13 @@ export default function LoginPage() {
               </Button>
             </form>
 
-            <div className="mt-6 pt-6 border-t">
-              <div className="bg-muted/50 rounded-lg p-4">
-                <p className="text-xs text-muted-foreground text-center">
-                  ¿Necesitas ayuda? Contacta al administrador del gimnasio
-                </p>
-              </div>
+            <div className="mt-6 pt-6 border-t text-center">
+              <p className="text-sm text-muted-foreground">
+                ¿No tienes cuenta?{" "}
+                <Link href="/register" className="text-primary hover:underline">
+                  Regístrate aquí
+                </Link>
+              </p>
             </div>
           </CardContent>
         </Card>
