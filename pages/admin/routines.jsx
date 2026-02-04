@@ -211,76 +211,115 @@ export default function RoutinesPage() {
           </Button>
         </div>
 
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder="Buscar rutinas..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
+        {/* Search */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Buscar rutinas..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 h-12"
+          />
+        </div>
+
+        {/* Rutinas list */}
+        {loading ? (
+          <div className="text-center py-12 text-muted-foreground">
+            Cargando rutinas...
+          </div>
+        ) : filteredRoutines.length === 0 ? (
+          <Card className="border-dashed">
+            <CardContent className="flex flex-col items-center justify-center py-12">
+              <div className="rounded-full bg-muted p-3 mb-4">
+                <Plus className="h-6 w-6 text-muted-foreground" />
               </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Nombre</TableHead>
-                  <TableHead>Ejercicios</TableHead>
-                  <TableHead>Días</TableHead>
-                  <TableHead>Nivel</TableHead>
-                  <TableHead>Estado</TableHead>
-                  <TableHead className="text-right">Acciones</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {loading ? (
-                  <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8">
-                      Cargando...
-                    </TableCell>
-                  </TableRow>
-                ) : filteredRoutines.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                      No hay rutinas
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  filteredRoutines.map((routine) => (
-                    <TableRow key={routine._id}>
-                      <TableCell className="font-medium">{routine.NOMBRE}</TableCell>
-                      <TableCell>{routine.EJERCICIOS?.length || 0} ejercicios</TableCell>
-                      <TableCell>{routine.DIAS?.join(", ") || "-"}</TableCell>
-                      <TableCell className="capitalize">{routine.NIVEL}</TableCell>
-                      <TableCell>
-                        <span className={`px-2 py-1 rounded-full text-xs ${
-                          routine.HABILITADA 
-                            ? "bg-green-500/20 text-green-500" 
-                            : "bg-red-500/20 text-red-500"
-                        }`}>
-                          {routine.HABILITADA ? "Activa" : "Inactiva"}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(routine)}>
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleDelete(routine)}>
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
+              <p className="text-muted-foreground text-center">
+                No hay rutinas todavía
+              </p>
+              <Button className="mt-4" onClick={() => handleOpenDialog()}>
+                <Plus className="mr-2 h-4 w-4" /> Crear primera rutina
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid gap-4">
+            {filteredRoutines.map((routine) => (
+              <Card key={routine._id} className="overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="flex items-stretch">
+                    {/* Main content */}
+                    <div 
+                      className="flex-1 p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                      onClick={() => handleOpenDialog(routine)}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className="font-semibold text-base truncate">
+                              {routine.NOMBRE || "Sin nombre"}
+                            </h3>
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium shrink-0 ${
+                              routine.HABILITADA 
+                                ? "bg-green-500/20 text-green-600" 
+                                : "bg-red-500/20 text-red-500"
+                            }`}>
+                              {routine.HABILITADA ? "Activa" : "Inactiva"}
+                            </span>
+                          </div>
+                          
+                          {routine.DESCRIPCION && (
+                            <p className="text-sm text-muted-foreground line-clamp-1 mb-2">
+                              {routine.DESCRIPCION}
+                            </p>
+                          )}
+                          
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                            <span className="flex items-center gap-1">
+                              <span className="font-medium text-foreground">
+                                {routine.EJERCICIOS?.length || 0}
+                              </span> ejercicios
+                            </span>
+                            <span className="capitalize flex items-center gap-1">
+                              Nivel: <span className="font-medium text-foreground">{routine.NIVEL || "—"}</span>
+                            </span>
+                            {routine.DURACION && (
+                              <span className="flex items-center gap-1">
+                                <span className="font-medium text-foreground">{routine.DURACION}</span> min
+                              </span>
+                            )}
+                          </div>
+                          
+                          {routine.DIAS?.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {routine.DIAS.map(dia => (
+                                <span 
+                                  key={dia} 
+                                  className="px-2 py-0.5 bg-primary/10 text-primary text-xs rounded-md font-medium"
+                                >
+                                  {dia.substring(0, 3)}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        
+                        <Edit className="h-4 w-4 text-muted-foreground shrink-0 mt-1" />
+                      </div>
+                    </div>
+                    
+                    {/* Delete button */}
+                    <button
+                      onClick={() => handleDelete(routine)}
+                      className="px-4 flex items-center justify-center bg-red-500/5 hover:bg-red-500/15 text-red-500 transition-colors border-l"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">

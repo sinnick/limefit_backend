@@ -123,27 +123,30 @@ export default function AdminLayout({ children }) {
         </div>
       </header>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation - Fixed tabs */}
       <div className="md:hidden border-b bg-card">
-        <div className="container mx-auto px-4 py-2">
-          <div className="flex gap-2 overflow-x-auto">
-            {navItems.map((item) => {
-              const Icon = item.icon
-              const isActive = router.pathname === item.href
-              return (
-                <Link key={item.href} href={item.href}>
-                  <Button
-                    variant={isActive ? "default" : "ghost"}
-                    size="sm"
-                    className="flex items-center gap-2"
-                  >
-                    <Icon className="h-4 w-4" />
-                    {item.label}
-                  </Button>
-                </Link>
-              )
-            })}
-          </div>
+        <div className="grid grid-cols-4">
+          {navItems.map((item) => {
+            const Icon = item.icon
+            const isActive = router.pathname === item.href
+            return (
+              <Link 
+                key={item.href} 
+                href={item.href}
+                className={`flex flex-col items-center justify-center py-3 gap-1 transition-colors relative ${
+                  isActive 
+                    ? "text-primary" 
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <Icon className={`h-5 w-5 ${isActive ? "text-primary" : ""}`} />
+                <span className="text-xs font-medium">{item.label}</span>
+                {isActive && (
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-primary rounded-full" />
+                )}
+              </Link>
+            )
+          })}
         </div>
       </div>
 

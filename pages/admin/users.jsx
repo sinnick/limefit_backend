@@ -184,84 +184,100 @@ export default function UsersPage() {
           </Button>
         </div>
 
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Buscar usuarios..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-8"
-                  />
-                </div>
+        {/* Search */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Buscar usuarios..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 h-12"
+          />
+        </div>
+
+        {/* Users list */}
+        {loading ? (
+          <div className="text-center py-12 text-muted-foreground">
+            Cargando usuarios...
+          </div>
+        ) : filteredUsers.length === 0 ? (
+          <Card className="border-dashed">
+            <CardContent className="flex flex-col items-center justify-center py-12">
+              <div className="rounded-full bg-muted p-3 mb-4">
+                <Plus className="h-6 w-6 text-muted-foreground" />
               </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <p className="text-center py-8 text-muted-foreground">Cargando...</p>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>DNI</TableHead>
-                    <TableHead>Usuario</TableHead>
-                    <TableHead>Nombre</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Rol</TableHead>
-                    <TableHead>Estado</TableHead>
-                    <TableHead className="text-right">Acciones</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredUsers.map((user) => (
-                    <TableRow key={user.DNI}>
-                      <TableCell className="font-medium">{user.DNI}</TableCell>
-                      <TableCell>{user.USUARIO}</TableCell>
-                      <TableCell>{`${user.NOMBRE} ${user.APELLIDO}`}</TableCell>
-                      <TableCell>{user.EMAIL}</TableCell>
-                      <TableCell>
-                        <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                          user.ADMIN ? "bg-primary/10 text-primary" : "bg-secondary text-secondary-foreground"
-                        }`}>
-                          {user.ADMIN ? "Admin" : "Usuario"}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                          user.HABILITADO ? "bg-green-500/10 text-green-500" : "bg-red-500/10 text-red-500"
-                        }`}>
-                          {user.HABILITADO ? "Activo" : "Inactivo"}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleOpenDialog(user)}
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDelete(user.DNI)}
-                          >
-                            <Trash2 className="h-4 w-4 text-destructive" />
-                          </Button>
+              <p className="text-muted-foreground text-center">
+                No hay usuarios todavía
+              </p>
+              <Button className="mt-4" onClick={() => handleOpenDialog()}>
+                <Plus className="mr-2 h-4 w-4" /> Crear primer usuario
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid gap-3">
+            {filteredUsers.map((user) => (
+              <Card key={user.DNI} className="overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="flex items-stretch">
+                    {/* Main content - clickable to edit */}
+                    <div 
+                      className="flex-1 p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                      onClick={() => handleOpenDialog(user)}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          {/* Name + badges */}
+                          <div className="flex items-center flex-wrap gap-2 mb-1">
+                            <h3 className="font-semibold text-base">
+                              {user.NOMBRE} {user.APELLIDO}
+                            </h3>
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                              user.ADMIN 
+                                ? "bg-primary/20 text-primary" 
+                                : "bg-muted text-muted-foreground"
+                            }`}>
+                              {user.ADMIN ? "Admin" : "Usuario"}
+                            </span>
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                              user.HABILITADO 
+                                ? "bg-green-500/20 text-green-600" 
+                                : "bg-red-500/20 text-red-500"
+                            }`}>
+                              {user.HABILITADO ? "Activo" : "Inactivo"}
+                            </span>
+                          </div>
+                          
+                          {/* Details */}
+                          <div className="space-y-1 text-sm text-muted-foreground">
+                            <p className="flex items-center gap-2">
+                              <span className="font-medium text-foreground">@{user.USUARIO}</span>
+                              <span className="text-muted-foreground/50">•</span>
+                              <span>DNI: {user.DNI}</span>
+                            </p>
+                            {user.EMAIL && (
+                              <p className="truncate">{user.EMAIL}</p>
+                            )}
+                          </div>
                         </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
-        </Card>
+                        
+                        <Edit className="h-4 w-4 text-muted-foreground shrink-0 mt-1" />
+                      </div>
+                    </div>
+                    
+                    {/* Delete button */}
+                    <button
+                      onClick={() => handleDelete(user.DNI)}
+                      className="px-4 flex items-center justify-center bg-red-500/5 hover:bg-red-500/15 text-red-500 transition-colors border-l"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="max-w-2xl">
