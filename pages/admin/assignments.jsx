@@ -4,14 +4,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -27,8 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
-import { Plus, Edit, Trash2, Search } from "lucide-react"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Plus, Edit, Trash2, Search, Calendar, Dumbbell } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function AssignmentsPage() {
   const [assignments, setAssignments] = useState([])
@@ -191,92 +183,115 @@ export default function AssignmentsPage() {
           </Button>
         </div>
 
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Buscar asignaciones..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-8"
-                  />
-                </div>
+        {/* Search */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Buscar asignaciones..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 h-12"
+          />
+        </div>
+
+        {/* Assignments list */}
+        {loading ? (
+          <div className="text-center py-12 text-muted-foreground">
+            Cargando asignaciones...
+          </div>
+        ) : filteredAssignments.length === 0 ? (
+          <Card className="border-dashed">
+            <CardContent className="flex flex-col items-center justify-center py-12">
+              <div className="rounded-full bg-muted p-3 mb-4">
+                <Plus className="h-6 w-6 text-muted-foreground" />
               </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <p className="text-center py-8 text-muted-foreground">Cargando...</p>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Usuario</TableHead>
-                    <TableHead>DNI</TableHead>
-                    <TableHead>Rutina</TableHead>
-                    <TableHead>Nivel</TableHead>
-                    <TableHead>Fecha Inicio</TableHead>
-                    <TableHead>Asignado Por</TableHead>
-                    <TableHead>Estado</TableHead>
-                    <TableHead className="text-right">Acciones</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredAssignments.map((assignment) => (
-                    <TableRow key={assignment._id}>
-                      <TableCell className="font-medium">
-                        {assignment.usuario
-                          ? `${assignment.usuario.NOMBRE} ${assignment.usuario.APELLIDO}`
-                          : "Usuario no encontrado"}
-                      </TableCell>
-                      <TableCell>{assignment.DNI}</TableCell>
-                      <TableCell>
-                        {assignment.rutina ? assignment.rutina.NOMBRE : "Rutina no encontrada"}
-                      </TableCell>
-                      <TableCell>
-                        <span className="capitalize">
-                          {assignment.rutina?.NIVEL || "-"}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        {new Date(assignment.FECHA_INICIO).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>{assignment.ASIGNADO_POR}</TableCell>
-                      <TableCell>
-                        <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                          assignment.ACTIVA ? "bg-green-500/10 text-green-500" : "bg-red-500/10 text-red-500"
-                        }`}>
-                          {assignment.ACTIVA ? "Activa" : "Inactiva"}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleOpenDialog(assignment)}
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDelete(assignment._id)}
-                          >
-                            <Trash2 className="h-4 w-4 text-destructive" />
-                          </Button>
+              <p className="text-muted-foreground text-center">
+                No hay asignaciones todavía
+              </p>
+              <Button className="mt-4" onClick={() => handleOpenDialog()}>
+                <Plus className="mr-2 h-4 w-4" /> Crear primera asignación
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid gap-3">
+            {filteredAssignments.map((assignment) => (
+              <Card key={assignment._id} className="overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="flex items-stretch">
+                    {/* Main content - clickable to edit */}
+                    <div 
+                      className="flex-1 p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                      onClick={() => handleOpenDialog(assignment)}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          {/* User name + status badge */}
+                          <div className="flex items-center flex-wrap gap-2 mb-1">
+                            <h3 className="font-semibold text-base">
+                              {assignment.usuario
+                                ? `${assignment.usuario.NOMBRE} ${assignment.usuario.APELLIDO}`
+                                : "Usuario no encontrado"}
+                            </h3>
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                              assignment.ACTIVA 
+                                ? "bg-green-500/20 text-green-600" 
+                                : "bg-red-500/20 text-red-500"
+                            }`}>
+                              {assignment.ACTIVA ? "Activa" : "Inactiva"}
+                            </span>
+                          </div>
+                          
+                          {/* Routine info */}
+                          <div className="flex items-center gap-2 mb-2">
+                            <Dumbbell className="h-4 w-4 text-primary shrink-0" />
+                            <span className="font-medium text-primary">
+                              {assignment.rutina ? assignment.rutina.NOMBRE : "Rutina no encontrada"}
+                            </span>
+                            {assignment.rutina?.NIVEL && (
+                              <>
+                                <span className="text-muted-foreground/50">•</span>
+                                <span className="text-sm text-muted-foreground capitalize">
+                                  {assignment.rutina.NIVEL}
+                                </span>
+                              </>
+                            )}
+                          </div>
+                          
+                          {/* Details */}
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+                            <span className="flex items-center gap-1">
+                              <Calendar className="h-3 w-3" />
+                              {new Date(assignment.FECHA_INICIO).toLocaleDateString()}
+                            </span>
+                            <span className="text-muted-foreground/50">•</span>
+                            <span>DNI: {assignment.DNI}</span>
+                            {assignment.ASIGNADO_POR && (
+                              <>
+                                <span className="text-muted-foreground/50">•</span>
+                                <span>por {assignment.ASIGNADO_POR}</span>
+                              </>
+                            )}
+                          </div>
                         </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
-        </Card>
+                        
+                        <Edit className="h-4 w-4 text-muted-foreground shrink-0 mt-1" />
+                      </div>
+                    </div>
+                    
+                    {/* Delete button */}
+                    <button
+                      onClick={() => handleDelete(assignment._id)}
+                      className="px-4 flex items-center justify-center bg-red-500/5 hover:bg-red-500/15 text-red-500 transition-colors border-l"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="max-w-2xl">
