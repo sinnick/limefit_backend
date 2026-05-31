@@ -20,6 +20,7 @@ const tenants = {
     basePath: '/limefit',
     gymId: 'limefit',
     favicon: '/tenants/limefit/favicon.ico',
+    logo: null, // sin imagen → usa el wordmark de texto + ícono
     pageTitle: 'LimeFit',
     dark: false,
     theme: {
@@ -43,6 +44,7 @@ const tenants = {
     basePath: '/level',
     gymId: 'level',
     favicon: '/tenants/level/favicon.ico',
+    logo: '/tenants/level/logo.png', // wordmark LEVELGYM (reemplaza ícono + texto)
     pageTitle: 'Level Gym',
     dark: true,
     // Paleta extraída de levelgym.com.ar/level/ (negro neutro + rojo de marca):

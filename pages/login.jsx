@@ -63,12 +63,22 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-            <Dumbbell className="w-8 h-8 text-primary" />
-          </div>
-          <h1 className="text-4xl font-bold tracking-tight mb-2">
-            <span className="text-primary">{activeTenant.logoPrimary}</span>{activeTenant.logoRest}
-          </h1>
+          {activeTenant.logo ? (
+            <img
+              src={apiPath(activeTenant.logo)}
+              alt={activeTenant.name}
+              className="h-14 w-auto mx-auto mb-4"
+            />
+          ) : (
+            <>
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
+                <Dumbbell className="w-8 h-8 text-primary" />
+              </div>
+              <h1 className="text-4xl font-bold tracking-tight mb-2">
+                <span className="text-primary">{activeTenant.logoPrimary}</span>{activeTenant.logoRest}
+              </h1>
+            </>
+          )}
           <p className="text-muted-foreground">
             {activeTenant.subtitle}
           </p>

@@ -3,10 +3,11 @@ import { activeTenant } from '@/config/tenant'
 
 export default function Document() {
   const t = activeTenant
-  // Inyecta las variables HSL del tenant en :root y .dark (gana en ambos
-  // selectores). Sobreescribe los defaults de styles/globals.css.
+  // Inyecta las variables HSL del tenant en :root y .dark. Usa !important para
+  // ganar siempre sobre styles/globals.css (que se carga DESPUÉS como <link> y,
+  // con igual especificidad, pisaría estos valores por orden de cascada).
   const vars = Object.entries(t.theme)
-    .map(([k, v]) => `--${k}: ${v};`)
+    .map(([k, v]) => `--${k}: ${v} !important;`)
     .join('')
   const themeCss = `:root{${vars}}.dark{${vars}}`
 

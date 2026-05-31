@@ -21,7 +21,7 @@ import {
   Home,
   Menu,
 } from "lucide-react"
-import { activeTenant } from "@/config/tenant"
+import { activeTenant, apiPath } from "@/config/tenant"
 
 export default function AdminLayout({ children }) {
   const { data: session, status } = useSession()
@@ -64,10 +64,19 @@ export default function AdminLayout({ children }) {
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-2">
-              <Dumbbell className="h-6 w-6 text-primary" />
-              <h1 className="text-xl font-bold">
-                <span className="text-primary">{activeTenant.logoPrimary}</span>{activeTenant.logoRest}{activeTenant.adminSuffix}
-              </h1>
+              {activeTenant.logo ? (
+                <>
+                  <img src={apiPath(activeTenant.logo)} alt={activeTenant.name} className="h-7 w-auto" />
+                  <span className="text-xl font-bold text-muted-foreground">{activeTenant.adminSuffix.trim()}</span>
+                </>
+              ) : (
+                <>
+                  <Dumbbell className="h-6 w-6 text-primary" />
+                  <h1 className="text-xl font-bold">
+                    <span className="text-primary">{activeTenant.logoPrimary}</span>{activeTenant.logoRest}{activeTenant.adminSuffix}
+                  </h1>
+                </>
+              )}
             </div>
 
             <nav className="hidden md:flex items-center gap-6">
