@@ -4,7 +4,12 @@ import Link from "next/link"
 import AdminLayout from "@/components/admin/AdminLayout"
 import { apiPath } from "@/config/tenant"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, Dumbbell, Calendar, TrendingUp } from "lucide-react"
+import { Users, Dumbbell, Calendar, TrendingUp, Trophy } from "lucide-react"
+import {
+  MonthlySignupsChart,
+  WeeklyAttendanceChart,
+  TopRoutinesChart,
+} from "@/components/admin/Charts"
 
 export default function AdminDashboard() {
   const { data: session } = useSession()
@@ -13,6 +18,13 @@ export default function AdminDashboard() {
     totalRoutines: 0,
     activeAssignments: 0,
     newUsersThisMonth: 0
+  })
+  const [charts, setCharts] = useState({
+    altasPorMes: [],
+    asistenciasPorSemana: [],
+    rutinasTop: [],
+    workoutsPorSemana: [],
+    prsEsteMes: 0,
   })
 
   useEffect(() => {
@@ -50,8 +62,26 @@ export default function AdminDashboard() {
       }
     }
 
+    async function fetchCharts() {
+      try {
+        const res = await fetch(apiPath("/api/admin/stats"))
+        if (!res.ok) throw new Error("stats request failed")
+        const data = await res.json()
+        setCharts({
+          altasPorMes: data.altasPorMes || [],
+          asistenciasPorSemana: data.asistenciasPorSemana || [],
+          rutinasTop: data.rutinasTop || [],
+          workoutsPorSemana: data.workoutsPorSemana || [],
+          prsEsteMes: data.prsEsteMes || 0,
+        })
+      } catch (error) {
+        console.error("Error fetching chart stats:", error)
+      }
+    }
+
     if (session?.user?.admin) {
       fetchStats()
+      fetchCharts()
     }
   }, [session])
 
@@ -83,6 +113,13 @@ export default function AdminDashboard() {
       description: "Este mes",
       icon: TrendingUp,
       color: "text-green-500"
+    },
+    {
+      title: "PRs Este Mes",
+      value: charts.prsEsteMes,
+      description: "Récords personales logrados",
+      icon: Trophy,
+      color: "text-yellow-500"
     }
   ]
 
@@ -96,7 +133,7 @@ export default function AdminDashboard() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {statCards.map((stat) => {
             const Icon = stat.icon
             return (
@@ -116,6 +153,48 @@ export default function AdminDashboard() {
               </Card>
             )
           })}
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Altas por Mes</CardTitle>
+              <CardDescription>Nuevos socios en los últimos 12 meses</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <MonthlySignupsChart data={charts.altasPorMes} />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Asistencias por Semana</CardTitle>
+              <CardDescription>Check-ins de las últimas 8 semanas</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <WeeklyAttendanceChart data={charts.asistenciasPorSemana} name="Asistencias" />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Workouts por Semana</CardTitle>
+              <CardDescription>Entrenamientos completados (últimas 8 semanas)</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <WeeklyAttendanceChart data={charts.workoutsPorSemana} name="Workouts" />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Rutinas Más Asignadas</CardTitle>
+              <CardDescription>Top 5 por asignaciones activas</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <TopRoutinesChart data={charts.rutinasTop} />
+            </CardContent>
+          </Card>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
