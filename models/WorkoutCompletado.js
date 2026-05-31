@@ -17,6 +17,8 @@ const setCompletadoSchema = mongoose.Schema({
   completado: { type: Boolean, default: false },
   timestamp: { type: Date },
   esRecord: { type: Boolean, default: false },
+  rpe: { type: Number },     // 2.3 — esfuerzo percibido (1-10)
+  notas: { type: String },   // 2.3 — nota del set
 }, { _id: false });
 
 // ── Ejercicio dentro del workout (con sus sets completados) ─────────────────

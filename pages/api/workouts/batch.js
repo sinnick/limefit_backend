@@ -59,6 +59,8 @@ export default async function handler(req, res) {
                     completado: s.completado,
                     timestamp: s.timestamp ? new Date(s.timestamp) : undefined,
                     esRecord: s.esRecord,
+                    rpe: s.rpe,       // 2.3 — esfuerzo percibido por set
+                    notas: s.notas,   // 2.3 — nota del set
                   }))
                 : [],
             }))
