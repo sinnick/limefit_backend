@@ -10,7 +10,9 @@
 //
 // Requiere MONGODB_URI en el entorno (o en .env / .env.local).
 
-import 'dotenv/config'
+import { config } from 'dotenv'
+config({ path: '.env.local' }) // Next usa .env.local; dotenv no lo lee por defecto
+config() // fallback a .env
 import mongoose from 'mongoose'
 
 const uri = process.env.MONGODB_URI
