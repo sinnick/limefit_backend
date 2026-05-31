@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
-import { Plus, Edit, Trash2, Search, X, CalendarDays, Library, Loader2 } from "lucide-react"
+import { Plus, Edit, Trash2, Search, X, CalendarDays, Library, Loader2, Share2 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 
 // ── Constantes del contrato (CONTRACT-fase0.md §a.1) ────────────────────────
@@ -362,6 +362,7 @@ export default function RoutinesPage() {
   const [editingRoutine, setEditingRoutine] = useState(null)
   const [formData, setFormData] = useState(emptyForm())
   const [activeDay, setActiveDay] = useState("0")
+  const [sharingId, setSharingId] = useState(null)
   const { toast } = useToast()
 
   useEffect(() => {
@@ -535,6 +536,39 @@ export default function RoutinesPage() {
     }
   }
 
+  // ── Publicar / despublicar en el marketplace (Fase 5.3, CONTRACT §2 + §5.1) ──
+  // Toggle COMPARTIDA vía PUT /api/admin/routines/share. El endpoint filtra por
+  // GYM_ID propio, así que solo afecta rutinas del gym activo.
+  async function handleShare(routine) {
+    const nuevoValor = !routine.COMPARTIDA
+    setSharingId(routine.ID)
+    try {
+      const res = await fetch(apiPath("/api/admin/routines/share"), {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ID: routine.ID, COMPARTIDA: nuevoValor }),
+      })
+
+      if (!res.ok) throw new Error("Error al compartir")
+
+      toast({
+        title: nuevoValor
+          ? "Rutina publicada en el marketplace"
+          : "Rutina retirada del marketplace",
+      })
+
+      fetchRoutines()
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo actualizar el estado de compartido",
+        variant: "destructive",
+      })
+    } finally {
+      setSharingId(null)
+    }
+  }
+
   const filteredRoutines = routines.filter(
     (r) =>
       r.NOMBRE?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -606,6 +640,12 @@ export default function RoutinesPage() {
                             >
                               {routine.HABILITADA ? "Activa" : "Inactiva"}
                             </span>
+                            {routine.COMPARTIDA && (
+                              <span className="px-2 py-0.5 rounded-full text-xs font-medium shrink-0 bg-blue-500/20 text-blue-600 flex items-center gap-1">
+                                <Share2 className="h-3 w-3" />
+                                Compartida
+                              </span>
+                            )}
                           </div>
 
                           {routine.DESCRIPCION && (
@@ -661,6 +701,31 @@ export default function RoutinesPage() {
                         <Edit className="h-4 w-4 text-muted-foreground shrink-0 mt-1" />
                       </div>
                     </div>
+
+                    {/* Share / Unshare button (Fase 5.3, CONTRACT §5.1) */}
+                    <button
+                      onClick={() => handleShare(routine)}
+                      disabled={sharingId === routine.ID}
+                      title={
+                        routine.COMPARTIDA
+                          ? "Dejar de compartir en el marketplace"
+                          : "Compartir en el marketplace"
+                      }
+                      className={`px-4 flex flex-col items-center justify-center gap-1 transition-colors border-l text-xs font-medium disabled:opacity-50 ${
+                        routine.COMPARTIDA
+                          ? "bg-blue-500/15 hover:bg-blue-500/25 text-blue-600"
+                          : "bg-muted/30 hover:bg-muted/60 text-muted-foreground"
+                      }`}
+                    >
+                      {sharingId === routine.ID ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Share2 className="h-4 w-4" />
+                      )}
+                      <span className="leading-tight text-center max-w-[5rem]">
+                        {routine.COMPARTIDA ? "Dejar de compartir" : "Compartir"}
+                      </span>
+                    </button>
 
                     {/* Delete button */}
                     <button

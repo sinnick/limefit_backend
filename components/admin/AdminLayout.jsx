@@ -27,6 +27,7 @@ import {
   Clock,
   LogIn,
   Bell,
+  Store,
 } from "lucide-react"
 import { activeTenant, apiPath } from "@/config/tenant"
 
@@ -69,6 +70,7 @@ export default function AdminLayout({ children }) {
     { href: "/admin/clases", label: "Clases", icon: Clock },
     { href: "/admin/acceso", label: "Acceso", icon: LogIn },
     { href: "/admin/anuncios", label: "Anuncios", icon: Bell },
+    { href: "/admin/marketplace", label: "Marketplace", icon: Store },
   ]
 
   return (
@@ -149,7 +151,7 @@ export default function AdminLayout({ children }) {
 
       {/* Mobile Navigation - Fixed tabs */}
       <div className="md:hidden border-b bg-card">
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-4 sm:grid-cols-5">
           {navItems.map((item) => {
             const Icon = item.icon
             const isActive = router.pathname === item.href
