@@ -23,6 +23,7 @@ const tenants = {
     logo: null, // sin imagen → usa el wordmark de texto + ícono
     pageTitle: 'LimeFit',
     dark: false,
+    fonts: null, // null → stack de sistema por defecto (sin cambios)
     theme: {
       primary: '84 81% 44%',
       'primary-foreground': '0 0% 100%',
@@ -47,6 +48,15 @@ const tenants = {
     logo: '/tenants/level/logo.png', // wordmark LEVELGYM (reemplaza ícono + texto)
     pageTitle: 'Level Gym',
     dark: true,
+    // Tipografía del sitio levelgym.com.ar: Bebas Neue (títulos, display
+    // condensada, uppercase) + Rajdhani (cuerpo y UI, sans técnica). Se cargan
+    // desde Google Fonts y se inyectan como --font-heading / --font-body.
+    fonts: {
+      heading: "'Bebas Neue', sans-serif",
+      body: "'Rajdhani', ui-sans-serif, system-ui, sans-serif",
+      googleHref:
+        'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap',
+    },
     // Paleta extraída de levelgym.com.ar/level/ (negro neutro + rojo de marca):
     // --level-primary-red #da100c, --level-accent #ff4757, --level-bg-dark #0a0a0a,
     // superficies #111/#1a1a1a, texto #fff / gris #b3b3b3.
