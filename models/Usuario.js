@@ -12,6 +12,7 @@ const schema = mongoose.Schema({
     "FECHA_CREACION": Date,
     "FOTO": String,
     "SEXO": String,
+    "PESO_OBJETIVO": Number,
     "GYM_ID": { type: String, index: true },
 });
 
