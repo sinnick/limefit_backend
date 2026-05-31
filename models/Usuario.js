@@ -13,6 +13,7 @@ const schema = mongoose.Schema({
     "FOTO": String,
     "SEXO": String,
     "PESO_OBJETIVO": Number,
+    "ROL": { type: String, enum: ["dueno", "admin", "entrenador", "recepcion", "usuario"], default: "usuario" },
     "GYM_ID": { type: String, index: true },
 });
 

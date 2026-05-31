@@ -47,6 +47,7 @@ export default function UsersPage() {
     EMAIL: "",
     SEXO: "M",
     ADMIN: false,
+    ROL: "usuario",
     HABILITADO: true
   })
   const { toast } = useToast()
@@ -83,6 +84,7 @@ export default function UsersPage() {
         EMAIL: user.EMAIL,
         SEXO: user.SEXO,
         ADMIN: user.ADMIN,
+        ROL: user.ROL || "usuario",
         HABILITADO: user.HABILITADO
       })
     } else {
@@ -96,6 +98,7 @@ export default function UsersPage() {
         EMAIL: "",
         SEXO: "M",
         ADMIN: false,
+        ROL: "usuario",
         HABILITADO: true
       })
     }
@@ -404,6 +407,24 @@ export default function UsersPage() {
                       </SelectContent>
                     </Select>
                   </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="ROL">Rol / Permisos</Label>
+                  <Select
+                    value={formData.ROL}
+                    onValueChange={(value) => setFormData({ ...formData, ROL: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="dueno">Dueño</SelectItem>
+                      <SelectItem value="admin">Admin</SelectItem>
+                      <SelectItem value="entrenador">Entrenador</SelectItem>
+                      <SelectItem value="recepcion">Recepción</SelectItem>
+                      <SelectItem value="usuario">Usuario</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
               <DialogFooter>

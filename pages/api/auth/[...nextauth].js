@@ -48,6 +48,7 @@ export const authOptions = {
             name: `${user.NOMBRE} ${user.APELLIDO}`,
             email: user.EMAIL,
             admin: user.ADMIN,
+            rol: user.ROL,
             image: user.FOTO
           }
         } catch (error) {
@@ -80,6 +81,7 @@ export const authOptions = {
         token.dni = user.dni
         token.username = user.username
         token.admin = user.admin
+        token.rol = user.rol
       }
       return token
     },
@@ -88,6 +90,7 @@ export const authOptions = {
         session.user.dni = token.dni
         session.user.username = token.username
         session.user.admin = token.admin
+        session.user.rol = token.rol
       }
       return session
     }

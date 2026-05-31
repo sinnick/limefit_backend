@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
   if (req.method === "POST") {
     try {
-      const { DNI, USUARIO, PASSWORD, NOMBRE, APELLIDO, EMAIL, SEXO, ADMIN } = req.body
+      const { DNI, USUARIO, PASSWORD, NOMBRE, APELLIDO, EMAIL, SEXO, ADMIN, ROL } = req.body
 
       // Check if user already exists (scoped to tenant)
       const existingUser = await Usuario.findOne({
@@ -51,6 +51,7 @@ export default async function handler(req, res) {
         EMAIL,
         SEXO,
         ADMIN: ADMIN || false,
+        ROL: ROL || (ADMIN ? "admin" : "usuario"),
         HABILITADO: true,
         FECHA_CREACION: new Date(),
         FOTO: "",
@@ -68,7 +69,7 @@ export default async function handler(req, res) {
 
   if (req.method === "PUT") {
     try {
-      const { DNI, NOMBRE, APELLIDO, EMAIL, SEXO, ADMIN, HABILITADO, PASSWORD } = req.body
+      const { DNI, NOMBRE, APELLIDO, EMAIL, SEXO, ADMIN, HABILITADO, PASSWORD, ROL } = req.body
 
       const updateData = {
         NOMBRE,
@@ -77,6 +78,11 @@ export default async function handler(req, res) {
         SEXO,
         ADMIN,
         HABILITADO
+      }
+
+      // Aditivo: solo setear ROL si viene en el body (no pisa con undefined)
+      if (ROL !== undefined) {
+        updateData.ROL = ROL
       }
 
       // Only update password if provided
