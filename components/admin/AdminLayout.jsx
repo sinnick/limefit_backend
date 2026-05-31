@@ -20,6 +20,9 @@ import {
   LogOut,
   Home,
   Menu,
+  Zap,
+  Activity,
+  Download,
 } from "lucide-react"
 import { activeTenant, apiPath } from "@/config/tenant"
 
@@ -55,6 +58,9 @@ export default function AdminLayout({ children }) {
     { href: "/admin/users", label: "Usuarios", icon: Users },
     { href: "/admin/routines", label: "Rutinas", icon: Dumbbell },
     { href: "/admin/assignments", label: "Asignaciones", icon: Calendar },
+    { href: "/admin/ejercicios", label: "Ejercicios", icon: Zap },
+    { href: "/admin/socios", label: "Socios", icon: Activity },
+    { href: "/admin/reportes", label: "Reportes", icon: Download },
   ]
 
   return (
@@ -79,7 +85,7 @@ export default function AdminLayout({ children }) {
               )}
             </div>
 
-            <nav className="hidden md:flex items-center gap-6">
+            <nav className="hidden md:flex items-center gap-4 lg:gap-6">
               {navItems.map((item) => {
                 const Icon = item.icon
                 const isActive = router.pathname === item.href
@@ -135,7 +141,7 @@ export default function AdminLayout({ children }) {
 
       {/* Mobile Navigation - Fixed tabs */}
       <div className="md:hidden border-b bg-card">
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-7">
           {navItems.map((item) => {
             const Icon = item.icon
             const isActive = router.pathname === item.href
@@ -143,14 +149,14 @@ export default function AdminLayout({ children }) {
               <Link 
                 key={item.href} 
                 href={item.href}
-                className={`flex flex-col items-center justify-center py-3 gap-1 transition-colors relative ${
-                  isActive 
-                    ? "text-primary" 
+                className={`flex flex-col items-center justify-center py-2 gap-1 transition-colors relative ${
+                  isActive
+                    ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 <Icon className={`h-5 w-5 ${isActive ? "text-primary" : ""}`} />
-                <span className="text-xs font-medium">{item.label}</span>
+                <span className="text-[10px] font-medium leading-tight text-center">{item.label}</span>
                 {isActive && (
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-primary rounded-full" />
                 )}
