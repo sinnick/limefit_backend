@@ -1,5 +1,6 @@
 import dbConnect from "utils/mongoose";
 import Record from "models/Record";
+import { activeTenant } from "config/tenant";
 import Cors from 'cors'
 
 const cors = Cors({
@@ -27,7 +28,7 @@ export default async function handler(req, res) {
     let { dni } = body;
     console.log("list records DNI consultado: ", dni);
     try {
-        let filter = { "DNI": dni };
+        let filter = { "DNI": dni, "GYM_ID": activeTenant.gymId };
         console.log("filter", filter);
         let result_records = await Record.find(filter);
         console.log({ result_records});

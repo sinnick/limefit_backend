@@ -1,5 +1,6 @@
 import dbConnect from "utils/mongoose";
 import Usuario from "models/Usuario";
+import { activeTenant } from "config/tenant";
 import Cors from 'cors'
 
 const cors = Cors({
@@ -29,7 +30,7 @@ export default async function handler(req, res) {
   let { dni } = body;
   console.log("DNI consultado: ", dni);
   try {
-    let filter = { "DNI": dni };
+    let filter = { "DNI": dni, "GYM_ID": activeTenant.gymId };
     console.log("filter", filter);
     let user = await Usuario.findOne(filter);
     console.log("user", user);

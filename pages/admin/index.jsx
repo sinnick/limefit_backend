@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import AdminLayout from "@/components/admin/AdminLayout"
+import { apiPath } from "@/config/tenant"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Users, Dumbbell, Calendar, TrendingUp } from "lucide-react"
 
@@ -18,9 +19,9 @@ export default function AdminDashboard() {
     async function fetchStats() {
       try {
         const [usersRes, routinesRes, assignmentsRes] = await Promise.all([
-          fetch("/limefit/api/admin/users"),
-          fetch("/limefit/api/admin/routines"),
-          fetch("/limefit/api/admin/assignments")
+          fetch(apiPath("/api/admin/users")),
+          fetch(apiPath("/api/admin/routines")),
+          fetch(apiPath("/api/admin/assignments"))
         ])
 
         const users = await usersRes.json()

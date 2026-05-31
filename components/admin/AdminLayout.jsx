@@ -21,6 +21,7 @@ import {
   Home,
   Menu,
 } from "lucide-react"
+import { activeTenant } from "@/config/tenant"
 
 export default function AdminLayout({ children }) {
   const { data: session, status } = useSession()
@@ -65,7 +66,7 @@ export default function AdminLayout({ children }) {
             <div className="flex items-center gap-2">
               <Dumbbell className="h-6 w-6 text-primary" />
               <h1 className="text-xl font-bold">
-                <span className="text-primary">LIME</span>FIT Admin
+                <span className="text-primary">{activeTenant.logoPrimary}</span>{activeTenant.logoRest}{activeTenant.adminSuffix}
               </h1>
             </div>
 

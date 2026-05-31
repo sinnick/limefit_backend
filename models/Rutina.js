@@ -21,6 +21,7 @@ const schema = mongoose.Schema({
   "DIFICULTAD": { type: Number, default: 3 }, // 1-5
   "NIVEL": { type: String, default: "medio" },
   "IMAGEN": String,
+  "GYM_ID": { type: String, index: true },
 });
 
 export default mongoose.models.Rutina || mongoose.model('Rutina', schema);

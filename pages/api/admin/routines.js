@@ -2,6 +2,7 @@ import dbConnect from "@/utils/mongoose"
 import Rutina from "@/models/Rutina"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]"
+import { activeTenant } from "@/config/tenant"
 
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions)
@@ -12,10 +13,11 @@ export default async function handler(req, res) {
   }
 
   await dbConnect()
+  const GYM_ID = activeTenant.gymId
 
   if (req.method === "GET") {
     try {
-      const routines = await Rutina.find({}).sort({ FECHA_CREACION: -1 })
+      const routines = await Rutina.find({ GYM_ID }).sort({ FECHA_CREACION: -1 })
       return res.status(200).json(routines)
     } catch (error) {
       return res.status(500).json({ error: error.message })
@@ -34,12 +36,13 @@ export default async function handler(req, res) {
         NIVEL
       } = req.body
 
-      // Get the highest ID and increment
-      const lastRoutine = await Rutina.findOne().sort({ ID: -1 })
+      // Get the highest ID and increment (scoped to tenant)
+      const lastRoutine = await Rutina.findOne({ GYM_ID }).sort({ ID: -1 })
       const newId = lastRoutine ? lastRoutine.ID + 1 : 1
 
       const newRoutine = await Rutina.create({
         ID: newId,
+        GYM_ID,
         NOMBRE,
         DESCRIPCION,
         DIAS: DIAS || [],
@@ -75,7 +78,7 @@ export default async function handler(req, res) {
       } = req.body
 
       const updatedRoutine = await Rutina.findOneAndUpdate(
-        { ID },
+        { ID, GYM_ID },
         {
           NOMBRE,
           DESCRIPCION,
@@ -105,7 +108,7 @@ export default async function handler(req, res) {
     try {
       const { id } = req.query
 
-      const deletedRoutine = await Rutina.findOneAndDelete({ ID: parseInt(id) })
+      const deletedRoutine = await Rutina.findOneAndDelete({ ID: parseInt(id), GYM_ID })
 
       if (!deletedRoutine) {
         return res.status(404).json({ error: "Rutina no encontrada" })

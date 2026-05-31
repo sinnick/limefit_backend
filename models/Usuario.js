@@ -12,6 +12,7 @@ const schema = mongoose.Schema({
     "FECHA_CREACION": Date,
     "FOTO": String,
     "SEXO": String,
+    "GYM_ID": { type: String, index: true },
 });
 
 export default mongoose.models.Usuario || mongoose.model('Usuario', schema);

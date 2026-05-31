@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import AdminLayout from "@/components/admin/AdminLayout"
+import { apiPath } from "@/config/tenant"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -56,7 +57,7 @@ export default function UsersPage() {
 
   async function fetchUsers() {
     try {
-      const res = await fetch("/limefit/api/admin/users")
+      const res = await fetch(apiPath("/api/admin/users"))
       const data = await res.json()
       setUsers(data)
     } catch (error) {
@@ -106,7 +107,7 @@ export default function UsersPage() {
 
     try {
       const method = editingUser ? "PUT" : "POST"
-      const res = await fetch("/limefit/api/admin/users", {
+      const res = await fetch(apiPath("/api/admin/users"), {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
@@ -138,7 +139,7 @@ export default function UsersPage() {
     if (!confirm("¿Estás seguro de eliminar este usuario?")) return
 
     try {
-      const res = await fetch(`/api/admin/users?dni=${dni}`, {
+      const res = await fetch(apiPath(`/api/admin/users?dni=${dni}`), {
         method: "DELETE"
       })
 

@@ -1,5 +1,6 @@
 import dbConnect from "utils/mongoose";
 import Rutina from "models/Rutina";
+import { activeTenant } from "config/tenant";
 import Cors from 'cors'
 
 const cors = Cors({
@@ -28,13 +29,14 @@ export default async function handler(req, res) {
     let {rutinas} = req.body;
     console.log("RUTINAS CONSULTADAS", rutinas);
     try {
+        const GYM_ID = activeTenant.gymId;
         if (rutinas) {
-            let filter = { "ID": rutinas };
+            let filter = { "ID": rutinas, GYM_ID };
             console.log("filter", filter);
             result_rutinas = await Rutina.find(filter);
             console.log({result_rutinas});
         } else {
-            result_rutinas = await Rutina.find({});
+            result_rutinas = await Rutina.find({ GYM_ID });
         }
         res.status(200).json({ status: "ok", result_rutinas: result_rutinas });
     } catch (error) {

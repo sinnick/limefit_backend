@@ -3,6 +3,7 @@ import Usuario from "@/models/Usuario"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]"
 import bcrypt from "bcryptjs"
+import { activeTenant } from "@/config/tenant"
 
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions)
@@ -13,10 +14,11 @@ export default async function handler(req, res) {
   }
 
   await dbConnect()
+  const GYM_ID = activeTenant.gymId
 
   if (req.method === "GET") {
     try {
-      const users = await Usuario.find({}).select('-PASSWORD').sort({ FECHA_CREACION: -1 })
+      const users = await Usuario.find({ GYM_ID }).select('-PASSWORD').sort({ FECHA_CREACION: -1 })
       return res.status(200).json(users)
     } catch (error) {
       return res.status(500).json({ error: error.message })
@@ -27,8 +29,9 @@ export default async function handler(req, res) {
     try {
       const { DNI, USUARIO, PASSWORD, NOMBRE, APELLIDO, EMAIL, SEXO, ADMIN } = req.body
 
-      // Check if user already exists
+      // Check if user already exists (scoped to tenant)
       const existingUser = await Usuario.findOne({
+        GYM_ID,
         $or: [{ DNI }, { USUARIO }]
       })
 
@@ -50,7 +53,8 @@ export default async function handler(req, res) {
         ADMIN: ADMIN || false,
         HABILITADO: true,
         FECHA_CREACION: new Date(),
-        FOTO: ""
+        FOTO: "",
+        GYM_ID
       })
 
       const userResponse = newUser.toObject()
@@ -81,7 +85,7 @@ export default async function handler(req, res) {
       }
 
       const updatedUser = await Usuario.findOneAndUpdate(
-        { DNI },
+        { DNI, GYM_ID },
         updateData,
         { new: true }
       ).select('-PASSWORD')
@@ -100,7 +104,7 @@ export default async function handler(req, res) {
     try {
       const { dni } = req.query
 
-      const deletedUser = await Usuario.findOneAndDelete({ DNI: parseInt(dni) })
+      const deletedUser = await Usuario.findOneAndDelete({ DNI: parseInt(dni), GYM_ID })
 
       if (!deletedUser) {
         return res.status(404).json({ error: "Usuario no encontrado" })

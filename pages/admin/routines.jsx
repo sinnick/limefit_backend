@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import AdminLayout from "@/components/admin/AdminLayout"
+import { apiPath } from "@/config/tenant"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -66,7 +67,7 @@ export default function RoutinesPage() {
 
   async function fetchRoutines() {
     try {
-      const res = await fetch("/limefit/api/admin/routines")
+      const res = await fetch(apiPath("/api/admin/routines"))
       const data = await res.json()
       setRoutines(data)
     } catch (error) {
@@ -140,7 +141,7 @@ export default function RoutinesPage() {
     e.preventDefault()
     
     try {
-      const url = "/limefit/api/admin/routines"
+      const url = apiPath("/api/admin/routines")
       const method = editingRoutine ? "PUT" : "POST"
       const body = editingRoutine 
         ? { ...formData, _id: editingRoutine._id }
@@ -174,7 +175,7 @@ export default function RoutinesPage() {
     if (!confirm(`¿Eliminar la rutina "${routine.NOMBRE}"?`)) return
 
     try {
-      const res = await fetch("/limefit/api/admin/routines", {
+      const res = await fetch(apiPath("/api/admin/routines"), {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ _id: routine._id })

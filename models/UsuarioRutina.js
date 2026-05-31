@@ -34,6 +34,10 @@ const UsuarioRutinaSchema = new mongoose.Schema({
   NOTAS: {
     type: String,
     default: ''
+  },
+  GYM_ID: {
+    type: String,
+    index: true
   }
 });
 
