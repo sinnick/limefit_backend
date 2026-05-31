@@ -4,9 +4,9 @@
 const { tenants } = require('./tenants')
 
 const activeId =
-  process.env.NEXT_PUBLIC_TENANT || process.env.TENANT || 'limefit'
+  process.env.NEXT_PUBLIC_TENANT || process.env.TENANT || 'level'
 
-const activeTenant = tenants[activeId] || tenants.limefit
+const activeTenant = tenants[activeId] || tenants.level
 
 // Prepende el basePath del tenant a rutas absolutas de la app (fetch, signIn).
 // next/link y router ya aplican basePath automáticamente; esto es para fetch().

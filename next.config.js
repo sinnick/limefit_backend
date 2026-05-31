@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const { tenants } = require('./config/tenants')
 
-const activeId = process.env.TENANT || 'limefit'
-const tenant = tenants[activeId] || tenants.limefit
+const activeId = process.env.TENANT || 'level'
+const tenant = tenants[activeId] || tenants.level
 
 const nextConfig = {
   reactStrictMode: true,
