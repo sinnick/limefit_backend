@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import AdminLayout from "@/components/admin/AdminLayout"
 import { apiPath } from "@/config/tenant"
 import { Button } from "@/components/ui/button"
@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
-import { Plus, Edit, Trash2, Search, X, CalendarDays } from "lucide-react"
+import { Plus, Edit, Trash2, Search, X, CalendarDays, Library, Loader2 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 
 // ── Constantes del contrato (CONTRACT-fase0.md §a.1) ────────────────────────
@@ -204,6 +204,154 @@ function countDias(routine) {
   }
   // legacy: EJERCICIOS[] equivale a un único día si hay ejercicios
   return countEjercicios(routine) > 0 ? 1 : 0
+}
+
+// ── Autocomplete de ejercicio desde la biblioteca ───────────────────────────
+// Input de texto con sugerencias desde GET /api/admin/ejercicios?q= (3.1).
+// - Sigue permitiendo tipeo manual libre: lo que se escribe es el valor real.
+// - Al elegir una sugerencia copia el NOMBRE (3.2). Es tolerante a fallos: si el
+//   endpoint no existe / falla, se comporta como un input de texto normal.
+function ExerciseNameAutocomplete({ value, onSelect, onChange, placeholder }) {
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState("")
+  const [results, setResults] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [highlight, setHighlight] = useState(-1)
+  const containerRef = useRef(null)
+  const debounceRef = useRef(null)
+  const reqIdRef = useRef(0)
+
+  // Cerrar al hacer click fuera.
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  // Buscar en la biblioteca con debounce cuando cambia `query` y el menú está abierto.
+  useEffect(() => {
+    if (!open) return
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(async () => {
+      const reqId = ++reqIdRef.current
+      setLoading(true)
+      try {
+        const url = apiPath(`/api/admin/ejercicios?q=${encodeURIComponent(query.trim())}&activo=true`)
+        const res = await fetch(url)
+        if (!res.ok) throw new Error("fetch ejercicios")
+        const data = await res.json()
+        // Ignorar respuestas viejas (race) y normalizar a array.
+        if (reqId !== reqIdRef.current) return
+        setResults(Array.isArray(data) ? data : [])
+      } catch {
+        if (reqId !== reqIdRef.current) return
+        // Degradado: sin biblioteca disponible, sin sugerencias (tipeo manual sigue ok).
+        setResults([])
+      } finally {
+        if (reqId === reqIdRef.current) setLoading(false)
+      }
+    }, 250)
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+    }
+  }, [query, open])
+
+  function handleFocus() {
+    setQuery(value || "")
+    setHighlight(-1)
+    setOpen(true)
+  }
+
+  function handleInputChange(e) {
+    const v = e.target.value
+    setQuery(v)
+    setHighlight(-1)
+    if (!open) setOpen(true)
+    onChange(v) // tipeo manual: el valor real se actualiza siempre
+  }
+
+  function choose(ejercicio) {
+    onSelect(ejercicio) // copia NOMBRE (+ grupo si el padre lo usa)
+    setOpen(false)
+    setHighlight(-1)
+  }
+
+  function handleKeyDown(e) {
+    if (!open) return
+    if (e.key === "ArrowDown") {
+      e.preventDefault()
+      setHighlight((h) => Math.min(h + 1, results.length - 1))
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault()
+      setHighlight((h) => Math.max(h - 1, 0))
+    } else if (e.key === "Enter") {
+      // Solo capturamos Enter si hay una sugerencia resaltada (no enviar el form).
+      if (highlight >= 0 && results[highlight]) {
+        e.preventDefault()
+        choose(results[highlight])
+      }
+    } else if (e.key === "Escape") {
+      setOpen(false)
+    }
+  }
+
+  return (
+    <div ref={containerRef} className="relative">
+      <div className="relative">
+        <Library className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+        <Input
+          value={value}
+          onChange={handleInputChange}
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          className="text-base h-12 pl-10"
+          autoComplete="off"
+        />
+        {loading && open && (
+          <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground animate-spin" />
+        )}
+      </div>
+
+      {open && (
+        <div className="absolute z-50 mt-1 w-full rounded-md border bg-popover text-popover-foreground shadow-md max-h-64 overflow-y-auto">
+          {results.length === 0 ? (
+            <div className="px-3 py-2 text-sm text-muted-foreground">
+              {loading
+                ? "Buscando en la biblioteca..."
+                : "Sin coincidencias en la biblioteca. Podés escribir el nombre a mano."}
+            </div>
+          ) : (
+            <ul className="py-1">
+              {results.map((ej, idx) => (
+                <li key={ej._id || ej.NOMBRE}>
+                  <button
+                    type="button"
+                    onMouseEnter={() => setHighlight(idx)}
+                    onClick={() => choose(ej)}
+                    className={`flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-sm transition-colors ${
+                      idx === highlight ? "bg-accent text-accent-foreground" : "hover:bg-accent/60"
+                    }`}
+                  >
+                    <span className="truncate font-medium">{ej.NOMBRE}</span>
+                    {ej.GRUPO_MUSCULAR && (
+                      <span className="shrink-0 rounded-md bg-primary/10 px-2 py-0.5 text-xs capitalize text-primary">
+                        {ej.GRUPO_MUSCULAR}
+                      </span>
+                    )}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default function RoutinesPage() {
@@ -726,15 +874,34 @@ export default function RoutinesPage() {
                                   </Button>
                                 </div>
 
-                                {/* Nombre del ejercicio - full width */}
-                                <Input
-                                  value={ejercicio.nombre}
-                                  onChange={(e) =>
-                                    updateExercise(di, ei, "nombre", e.target.value)
-                                  }
-                                  placeholder="Nombre del ejercicio (ej: Press de banca)"
-                                  className="text-base h-12"
-                                />
+                                {/* Nombre del ejercicio - autocomplete desde biblioteca (3.2).
+                                    Permite elegir de la biblioteca o tipear libre. */}
+                                <div className="space-y-1">
+                                  <Label className="text-xs text-muted-foreground">
+                                    Ejercicio (elegí de la biblioteca o escribí a mano)
+                                  </Label>
+                                  <ExerciseNameAutocomplete
+                                    value={ejercicio.nombre}
+                                    placeholder="Nombre del ejercicio (ej: Press de banca)"
+                                    onChange={(v) => updateExercise(di, ei, "nombre", v)}
+                                    onSelect={(ej) => {
+                                      updateExercise(di, ei, "nombre", ej.NOMBRE || "")
+                                      // Grupo muscular: solo informativo en el builder.
+                                      // No se persiste (exerciseToPayload ignora campos extra).
+                                      updateExercise(
+                                        di,
+                                        ei,
+                                        "grupoMuscular",
+                                        ej.GRUPO_MUSCULAR || ""
+                                      )
+                                    }}
+                                  />
+                                  {ejercicio.grupoMuscular && (
+                                    <p className="text-xs text-muted-foreground capitalize">
+                                      Grupo: {ejercicio.grupoMuscular}
+                                    </p>
+                                  )}
+                                </div>
 
                                 {/* Series, Reps, Descanso */}
                                 <div className="grid grid-cols-3 gap-3">
