@@ -359,13 +359,15 @@ export default function MembresiasPage() {
                               </span>
                             )}
                           </TableCell>
-                          <TableCell className="text-right whitespace-nowrap">
-                            <Button variant="outline" size="sm" className="mr-2" onClick={() => openPagoDialog(m)}>
-                              <DollarSign className="h-4 w-4 mr-1" /> Pago
-                            </Button>
-                            <Button variant="outline" size="sm" onClick={() => suspenderMembresia(m)}>
-                              {m.ESTADO === "suspendida" ? "Reactivar" : "Suspender"}
-                            </Button>
+                          <TableCell className="whitespace-nowrap">
+                            <div className="flex items-center justify-end gap-2">
+                              <Button variant="outline" size="sm" onClick={() => openPagoDialog(m)}>
+                                <DollarSign className="h-4 w-4 mr-1" /> Pago
+                              </Button>
+                              <Button variant="outline" size="sm" className="min-w-[104px]" onClick={() => suspenderMembresia(m)}>
+                                {m.ESTADO === "suspendida" ? "Reactivar" : "Suspender"}
+                              </Button>
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}
