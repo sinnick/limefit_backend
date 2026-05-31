@@ -1,18 +1,9 @@
 import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Separator } from "@/components/ui/separator"
 import {
   Users,
   Dumbbell,
@@ -20,6 +11,7 @@ import {
   LogOut,
   Home,
   Menu,
+  X,
   Zap,
   Activity,
   Download,
@@ -34,6 +26,7 @@ import { activeTenant, apiPath } from "@/config/tenant"
 export default function AdminLayout({ children }) {
   const { data: session, status } = useSession()
   const router = useRouter()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -42,6 +35,11 @@ export default function AdminLayout({ children }) {
       router.push("/")
     }
   }, [session, status, router])
+
+  // Cerrar el drawer al navegar (mobile).
+  useEffect(() => {
+    setMobileOpen(false)
+  }, [router.pathname])
 
   if (status === "loading") {
     return (
@@ -65,119 +63,132 @@ export default function AdminLayout({ children }) {
     { href: "/admin/assignments", label: "Asignaciones", icon: Calendar },
     { href: "/admin/ejercicios", label: "Ejercicios", icon: Zap },
     { href: "/admin/socios", label: "Socios", icon: Activity },
-    { href: "/admin/reportes", label: "Reportes", icon: Download },
     { href: "/admin/membresias", label: "Membresías", icon: CreditCard },
     { href: "/admin/clases", label: "Clases", icon: Clock },
     { href: "/admin/acceso", label: "Acceso", icon: LogIn },
     { href: "/admin/anuncios", label: "Anuncios", icon: Bell },
     { href: "/admin/marketplace", label: "Marketplace", icon: Store },
+    { href: "/admin/reportes", label: "Reportes", icon: Download },
   ]
+
+  // Marca activa también las sub-rutas (p.ej. /admin/socios/123).
+  const isActive = (href) =>
+    href === "/admin"
+      ? router.pathname === "/admin"
+      : router.pathname === href || router.pathname.startsWith(href + "/")
+
+  const Logo = () => (
+    <div className="flex items-center gap-2 min-w-0">
+      {activeTenant.logo ? (
+        <>
+          <img src={apiPath(activeTenant.logo)} alt={activeTenant.name} className="h-7 w-auto" />
+          <span className="text-base font-bold text-muted-foreground">{activeTenant.adminSuffix.trim()}</span>
+        </>
+      ) : (
+        <h1 className="text-lg font-bold truncate">
+          <span className="text-primary">{activeTenant.logoPrimary}</span>
+          {activeTenant.logoRest}
+          <span className="text-muted-foreground">{activeTenant.adminSuffix}</span>
+        </h1>
+      )}
+    </div>
+  )
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-2">
-              {activeTenant.logo ? (
-                <>
-                  <img src={apiPath(activeTenant.logo)} alt={activeTenant.name} className="h-7 w-auto" />
-                  <span className="text-xl font-bold text-muted-foreground">{activeTenant.adminSuffix.trim()}</span>
-                </>
-              ) : (
-                <>
-                  <Dumbbell className="h-6 w-6 text-primary" />
-                  <h1 className="text-xl font-bold">
-                    <span className="text-primary">{activeTenant.logoPrimary}</span>{activeTenant.logoRest}{activeTenant.adminSuffix}
-                  </h1>
-                </>
-              )}
-            </div>
-
-            <nav className="hidden md:flex items-center gap-4 lg:gap-6">
-              {navItems.map((item) => {
-                const Icon = item.icon
-                const isActive = router.pathname === item.href
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary ${
-                      isActive ? "text-primary" : "text-muted-foreground"
-                    }`}
-                  >
-                    <Icon className="h-4 w-4" />
-                    {item.label}
-                  </Link>
-                )
-              })}
-            </nav>
-
-            <div className="flex items-center gap-4">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                    <Avatar>
-                      <AvatarImage src={session.user.image} />
-                      <AvatarFallback className="bg-primary text-primary-foreground">
-                        {session.user.name?.charAt(0) || "A"}
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">
-                        {session.user.name}
-                      </p>
-                      <p className="text-xs leading-none text-muted-foreground">
-                        {session.user.email}
-                      </p>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => signOut()}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Cerrar sesión</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </div>
+      {/* ── Sidebar (fijo en desktop, drawer en mobile) ───────────────────── */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r bg-card transition-transform duration-200 md:translate-x-0 ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex h-16 items-center justify-between border-b px-4">
+          <Logo />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setMobileOpen(false)}
+            aria-label="Cerrar menú"
+          >
+            <X className="h-5 w-5" />
+          </Button>
         </div>
-      </header>
 
-      {/* Mobile Navigation - Fixed tabs */}
-      <div className="md:hidden border-b bg-card">
-        <div className="grid grid-cols-4 sm:grid-cols-5">
+        <nav className="flex-1 space-y-1 overflow-y-auto px-2 py-4">
           {navItems.map((item) => {
             const Icon = item.icon
-            const isActive = router.pathname === item.href
+            const active = isActive(item.href)
             return (
-              <Link 
-                key={item.href} 
+              <Link
+                key={item.href}
                 href={item.href}
-                className={`flex flex-col items-center justify-center py-2 gap-1 transition-colors relative ${
-                  isActive
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
+                className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                  active
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
                 }`}
               >
-                <Icon className={`h-5 w-5 ${isActive ? "text-primary" : ""}`} />
-                <span className="text-[10px] font-medium leading-tight text-center">{item.label}</span>
-                {isActive && (
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-primary rounded-full" />
-                )}
+                <Icon className="h-4 w-4 shrink-0" />
+                <span className="truncate">{item.label}</span>
               </Link>
             )
           })}
-        </div>
-      </div>
+        </nav>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">{children}</main>
+        {/* Usuario + logout (pie del sidebar) */}
+        <div className="border-t p-3">
+          <div className="flex items-center gap-3">
+            <Avatar className="h-9 w-9 shrink-0">
+              <AvatarImage src={session.user.image} />
+              <AvatarFallback className="bg-primary text-primary-foreground">
+                {session.user.name?.charAt(0) || "A"}
+              </AvatarFallback>
+            </Avatar>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium leading-none">{session.user.name}</p>
+              <p className="mt-1 truncate text-xs leading-none text-muted-foreground">
+                {session.user.email}
+              </p>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => signOut()}
+              aria-label="Cerrar sesión"
+            >
+              <LogOut className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </aside>
+
+      {/* Overlay del drawer (mobile) */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* ── Contenido (con margen para el sidebar en desktop) ─────────────── */}
+      <div className="md:pl-64">
+        {/* Topbar mobile con hamburguesa */}
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b bg-card px-4 md:hidden">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setMobileOpen(true)}
+            aria-label="Abrir menú"
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+          <Logo />
+        </header>
+
+        <main className="mx-auto max-w-7xl p-4 md:p-8">{children}</main>
+      </div>
     </div>
   )
 }
