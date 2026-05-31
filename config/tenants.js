@@ -37,7 +37,7 @@ const tenants = {
     logoPrimary: 'LEVEL',
     logoRest: '',
     adminSuffix: ' Admin',
-    subtitle: 'PLACEHOLDER_SUBTITLE',
+    subtitle: 'Sistema de Gestión de Gimnasio',
     registerSubtitle: 'Crear nueva cuenta',
     copyright: 'Level Gym © 2026',
     basePath: '/level',
@@ -45,25 +45,27 @@ const tenants = {
     favicon: '/tenants/level/favicon.ico',
     pageTitle: 'Level Gym',
     dark: true,
-    // PLACEHOLDER: reemplazar con la paleta extraída de levelgym.com.ar/level/
+    // Paleta extraída de levelgym.com.ar/level/ (negro neutro + rojo de marca):
+    // --level-primary-red #da100c, --level-accent #ff4757, --level-bg-dark #0a0a0a,
+    // superficies #111/#1a1a1a, texto #fff / gris #b3b3b3.
     theme: {
-      primary: '84 81% 44%',
+      primary: '1 90% 45%', // #da100c
       'primary-foreground': '0 0% 100%',
-      accent: '84 81% 44%',
-      'accent-foreground': '0 0% 100%',
-      ring: '84 81% 44%',
-      background: '240 10% 3.9%',
+      accent: '0 0% 15%', // hover/focus sutil (no el rojo, para no saturar)
+      'accent-foreground': '0 0% 98%',
+      ring: '1 90% 45%',
+      background: '0 0% 4%', // #0a0a0a
       foreground: '0 0% 98%',
-      card: '240 10% 3.9%',
+      card: '0 0% 7%', // #121212
       'card-foreground': '0 0% 98%',
-      border: '240 3.7% 15.9%',
-      input: '240 3.7% 15.9%',
-      muted: '240 3.7% 15.9%',
-      'muted-foreground': '240 5% 64.9%',
-      secondary: '240 3.7% 15.9%',
-      'secondary-foreground': '0 0% 98%',
-      popover: '240 10% 3.9%',
+      popover: '0 0% 7%',
       'popover-foreground': '0 0% 98%',
+      secondary: '0 0% 15%',
+      'secondary-foreground': '0 0% 98%',
+      muted: '0 0% 15%',
+      'muted-foreground': '0 0% 70%', // #b3b3b3
+      border: '0 0% 15%',
+      input: '0 0% 15%',
     },
   },
 }
