@@ -15,4 +15,14 @@ function apiPath(path) {
   return `${activeTenant.basePath}${clean}`
 }
 
-module.exports = { activeTenant, apiPath, activeId }
+// ADICIÓN aditiva (Fase 5.1 SaaS): helper síncrono y puro que indica si un slug
+// corresponde a un tenant ESTÁTICO (build-time: limefit/level). No introduce
+// Mongoose ni async, no afecta el build. Lo reusan el endpoint de registro
+// (slugs reservados) y el helper utils/branding.js (estáticos primero).
+// NO modifica activeTenant/apiPath/activeId: el comportamiento de los tenants
+// estáticos queda byte-idéntico.
+function isStaticTenant(slug) {
+  return Boolean(tenants[String(slug || '').toLowerCase()])
+}
+
+module.exports = { activeTenant, apiPath, activeId, isStaticTenant }
