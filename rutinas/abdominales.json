@@ -4,84 +4,84 @@
   "DESCRIPCION": "rutina de abs",
   "EJERCICIOS": [
     {
-      "name": "Landmine twist",
+      "name": "Giro con landmine",
       "type": "strength",
-      "muscle": "abdominals",
-      "equipment": "other",
-      "difficulty": "intermediate",
-      "instructions": "Position a bar into a landmine or securely anchor it in a corner. Load the bar to an appropriate weight. Raise the bar from the floor, taking it to shoulder height with both hands with your arms extended in front of you. Adopt a wide stance. This will be your starting position. Perform the movement by rotating the trunk and hips as you swing the weight all the way down to one side. Keep your arms extended throughout the exercise. Reverse the motion to swing the weight all the way to the opposite side. Continue alternating the movement until the set is complete."
+      "muscle": "abdominales",
+      "equipment": "otro",
+      "difficulty": "intermedio",
+      "instructions": "Colocá una barra en un soporte landmine o anclala firme en una esquina. Cargá la barra con un peso adecuado. Levantá la barra del piso y llevala a la altura de los hombros con ambas manos y los brazos extendidos frente a vos. Adoptá una postura amplia con las piernas separadas. Esta es tu posición inicial. Realizá el movimiento rotando el tronco y la cadera mientras llevás el peso hacia abajo y hacia un costado. Mantené los brazos extendidos durante todo el ejercicio. Invertí el movimiento para llevar el peso completamente hacia el lado opuesto. Seguí alternando el movimiento hasta completar la serie."
     },
     {
-      "name": "Elbow plank",
+      "name": "Plancha con antebrazos",
       "type": "strength",
-      "muscle": "abdominals",
-      "equipment": "body_only",
-      "difficulty": "intermediate",
-      "instructions": "Get into a prone position on the floor, supporting your weight on your toes and your forearms. Your arms are bent and directly below the shoulder. Keep your body straight at all times, and hold this position as long as possible. To increase difficulty, an arm or leg can be raised."
+      "muscle": "abdominales",
+      "equipment": "peso_corporal",
+      "difficulty": "intermedio",
+      "instructions": "Ubicate boca abajo en el piso, apoyando tu peso sobre las puntas de los pies y los antebrazos. Los brazos quedan flexionados y directamente debajo de los hombros. Mantené el cuerpo recto en todo momento y sostené esta posición la mayor cantidad de tiempo posible. Para aumentar la dificultad, podés levantar un brazo o una pierna."
     },
     {
-      "name": "Bottoms Up",
+      "name": "Bottoms Up (elevación de cadera)",
       "type": "strength",
-      "muscle": "abdominals",
-      "equipment": "body_only",
-      "difficulty": "intermediate",
-      "instructions": "Begin by lying on your back on the ground. Your legs should be straight and your arms at your side. This will be your starting position. To perform the movement, tuck the knees toward your chest by flexing the hips and knees. Following this, extend your legs directly above you so that they are perpendicular to the ground. Rotate and elevate your pelvis to raise your glutes from the floor. After a brief pause, return to the starting position."
+      "muscle": "abdominales",
+      "equipment": "peso_corporal",
+      "difficulty": "intermedio",
+      "instructions": "Empezá acostado boca arriba en el piso. Las piernas deben estar extendidas y los brazos a los costados. Esta es tu posición inicial. Para realizar el movimiento, llevá las rodillas hacia el pecho flexionando la cadera y las rodillas. A continuación, extendé las piernas directamente hacia arriba de modo que queden perpendiculares al piso. Rotá y elevá la pelvis para levantar los glúteos del piso. Después de una breve pausa, volvé a la posición inicial."
     },
     {
-      "name": "Suspended ab fall-out",
+      "name": "Fall-out abdominal en TRX",
       "type": "strength",
-      "muscle": "abdominals",
-      "equipment": "other",
-      "difficulty": "intermediate",
-      "instructions": "Adjust the straps so the handles are at an appropriate height, below waist level. Begin standing and grasping the handles. Lean into the straps, moving to an incline push-up position. This will be your starting position. Keeping your arms straight, lean further into the suspension straps, bringing your body closer to the ground, allowing your shoulders to extend, raising your arms up and over your head. Maintain a neutral spine and keep the rest of your body straight, your shoulders being the only joints allowed to move. Pause during the peak contraction, and then return to the starting position."
+      "muscle": "abdominales",
+      "equipment": "otro",
+      "difficulty": "intermedio",
+      "instructions": "Ajustá las cintas para que las manijas queden a una altura adecuada, por debajo de la cintura. Empezá de pie, agarrando las manijas. Inclinate hacia adelante apoyándote en las cintas, llevándote a una posición de flexión inclinada. Esta es tu posición inicial. Manteniendo los brazos rectos, inclinate más hacia las cintas de suspensión, acercando tu cuerpo al piso y dejando que tus hombros se extiendan, llevando los brazos por encima de la cabeza. Mantené la columna en posición neutra y el resto del cuerpo recto, dejando que solo se muevan los hombros. Hacé una pausa en la contracción máxima y luego volvé a la posición inicial."
     },
     {
-      "name": "Dumbbell V-Sit Cross Jab",
+      "name": "Cross jab en V-sit con mancuernas",
       "type": "strength",
-      "muscle": "abdominals",
-      "equipment": "dumbbell",
-      "difficulty": "intermediate",
-      "instructions": "Begin seated on your butt with your knees bent and feet on the ground. Lean your upper body back to form a 45-degree angle with the floor. Bring your feet off the ground so that your body resembles a \"V\" shape. Grasp a dumbbell in each hand and hold tight to your chest with palms facing each other. This will be your starting position. While keeping your core tight and maintaining your body's \"V\" position, quickly extend your left arm straight out (similar to a jab) and then bring it back to the starting position while simultaneously punching out with the right arm. Your torso and legs may slightly rotate side to side opposite of your hands throughout the movementâ€”this is okay. A punch with each hand counts as one total repetition. Repeat for recommended number of repetitions."
+      "muscle": "abdominales",
+      "equipment": "mancuernas",
+      "difficulty": "intermedio",
+      "instructions": "Empezá sentado en el piso con las rodillas flexionadas y los pies apoyados. Incliná el torso hacia atrás formando un ángulo de 45 grados con el piso. Levantá los pies del piso de modo que tu cuerpo forme una \"V\". Agarrá una mancuerna en cada mano y sostenelas firme contra el pecho con las palmas enfrentadas. Esta es tu posición inicial. Manteniendo el abdomen contraído y la posición en \"V\", extendé rápidamente el brazo izquierdo hacia adelante (como un jab) y luego traelo de vuelta a la posición inicial mientras simultáneamente lanzás el golpe con el brazo derecho. El torso y las piernas pueden rotar levemente de lado a lado en sentido opuesto a las manos durante el movimiento; eso está bien. Un golpe con cada mano cuenta como una repetición completa. Repetí la cantidad de repeticiones recomendada."
     },
     {
-      "name": "Standing cable low-to-high twist",
+      "name": "Giro de polea de abajo hacia arriba de pie",
       "type": "strength",
-      "muscle": "abdominals",
-      "equipment": "cable",
-      "difficulty": "intermediate",
-      "instructions": "Connect a standard handle on a tower, and move the cable to the lowest pulley position. With your side to the cable, grab the handle with one hand and step away from the tower. You should be approximately armâ€™s length away from the pulley, with the tension of the weight on the cable. Your outstretched arm should be aligned with the cable. With your feet positioned shoulder width apart, squat down and grab the handle with both hands. Your arms should still be fully extended. In one motion, pull the handle up and across your body until your arms are in a fully-extended position above your head. Keep your back straight and your arms close to your body as you pivot your back foot and straighten your legs to get a full range of motion. Retract your arms and then your body. Return to the neutral position in a slow and controlled manner. Repeat to failure. Then, reposition and repeat the same series of movements on the opposite side.  Tip: You will twist your entire body with this exercise, but focus on getting maximal torso rotation and a strong clinch at the end of the movement. To ensure a good mind-muscle connection, keep your abs tense at all times."
+      "muscle": "abdominales",
+      "equipment": "polea",
+      "difficulty": "intermedio",
+      "instructions": "Colocá una manija estándar en la torre y llevá la polea a la posición más baja. Con un costado hacia la polea, agarrá la manija con una mano y alejate de la torre. Deberías quedar aproximadamente a la distancia de un brazo de la polea, con la tensión del peso sobre el cable. Tu brazo extendido debe quedar alineado con el cable. Con los pies separados al ancho de los hombros, hacé una sentadilla y agarrá la manija con ambas manos. Los brazos deben seguir totalmente extendidos. En un solo movimiento, tirá de la manija hacia arriba y cruzando tu cuerpo hasta que los brazos queden completamente extendidos por encima de la cabeza. Mantené la espalda recta y los brazos cerca del cuerpo mientras pivoteás sobre el pie de atrás y estirás las piernas para lograr un rango de movimiento completo. Retraé los brazos y luego el cuerpo. Volvé a la posición neutra de forma lenta y controlada. Repetí hasta el fallo. Después, cambiá de posición y repetí la misma serie de movimientos del lado opuesto. Consejo: vas a rotar todo el cuerpo con este ejercicio, pero enfocate en lograr la máxima rotación del torso y una fuerte contracción al final del movimiento. Para asegurar una buena conexión mente-músculo, mantené el abdomen tenso en todo momento."
     },
     {
-      "name": "Dumbbell spell caster",
+      "name": "Spell caster con mancuernas",
       "type": "strength",
-      "muscle": "abdominals",
-      "equipment": "dumbbell",
-      "difficulty": "beginner",
-      "instructions": "Hold a dumbbell in each hand with a pronated grip. Your feet should be wide with your hips and knees extended. This will be your starting position. Begin the movement by pulling both of the dumbbells to one side next to your hip, rotating your torso. Keeping your arms straight and the dumbbells parallel to the ground, rotate your torso to swing the weights to your opposite side. Continue alternating, rotating from one side to the other until the set is complete."
+      "muscle": "abdominales",
+      "equipment": "mancuernas",
+      "difficulty": "principiante",
+      "instructions": "Sostené una mancuerna en cada mano con agarre pronado. Los pies deben estar separados con la cadera y las rodillas extendidas. Esta es tu posición inicial. Comenzá el movimiento llevando ambas mancuernas hacia un costado, junto a la cadera, rotando el torso. Manteniendo los brazos rectos y las mancuernas paralelas al piso, rotá el torso para llevar los pesos hacia el lado opuesto. Seguí alternando, rotando de un lado al otro hasta completar la serie."
     },
     {
-      "name": "Decline reverse crunch",
+      "name": "Crunch invertido en banco declinado",
       "type": "strength",
-      "muscle": "abdominals",
-      "equipment": "other",
-      "difficulty": "intermediate",
-      "instructions": "Lie on your back on a decline bench and hold on to the top of the bench with both hands. Don't let your body slip down from this position. Hold your legs parallel to the floor using your abs to hold them there while keeping your knees and feet together. Tip: Your legs should be fully extended with a slight bend on the knee. This will be your starting position. While exhaling, move your legs towards the torso as you roll your pelvis backwards and you raise your hips off the bench. At the end of this movement your knees will be touching your chest. Hold the contraction for a second and move your legs back to the starting position while inhaling. Repeat for the recommended amount of repetitions.  Variations: You can do the movement on a flat surface and as you get more advanced you can use ankle weights."
+      "muscle": "abdominales",
+      "equipment": "otro",
+      "difficulty": "intermedio",
+      "instructions": "Acostate boca arriba en un banco declinado y agarrate de la parte superior del banco con ambas manos. No dejes que tu cuerpo se deslice desde esta posición. Mantené las piernas paralelas al piso usando el abdomen para sostenerlas ahí, manteniendo las rodillas y los pies juntos. Consejo: las piernas deben estar totalmente extendidas con una leve flexión en la rodilla. Esta es tu posición inicial. Mientras exhalás, llevá las piernas hacia el torso a la vez que rotás la pelvis hacia atrás y elevás la cadera del banco. Al final de este movimiento, las rodillas estarán tocando el pecho. Mantené la contracción un segundo y volvé las piernas a la posición inicial mientras inhalás. Repetí la cantidad de repeticiones recomendada. Variaciones: podés hacer el movimiento sobre una superficie plana y, a medida que avances, podés usar tobilleras con peso."
     },
     {
-      "name": "Spider crawl",
+      "name": "Spider crawl (escalador araña)",
       "type": "strength",
-      "muscle": "abdominals",
-      "equipment": "body_only",
-      "difficulty": "intermediate",
-      "instructions": "Begin in a prone position on the floor. Support your weight on your hands and toes, with your feet together and your body straight. Your arms should be bent to 90 degrees. This will be your starting position. Initiate the movement by raising one foot off of the ground. Externally rotate the leg and bring the knee toward your elbow, as far forward as possible. Return this leg to the starting position and repeat on the opposite side."
+      "muscle": "abdominales",
+      "equipment": "peso_corporal",
+      "difficulty": "intermedio",
+      "instructions": "Empezá en posición boca abajo en el piso. Apoyá tu peso sobre las manos y las puntas de los pies, con los pies juntos y el cuerpo recto. Los brazos deben estar flexionados a 90 grados. Esta es tu posición inicial. Iniciá el movimiento levantando un pie del piso. Rotá la pierna hacia afuera y llevá la rodilla hacia el codo, lo más adelante posible. Volvé esta pierna a la posición inicial y repetí del lado opuesto."
     },
     {
-      "name": "Cocoons",
+      "name": "Cocoons (capullos)",
       "type": "strength",
-      "muscle": "abdominals",
-      "equipment": "body_only",
-      "difficulty": "intermediate",
-      "instructions": "Begin by lying on your back on the ground. Your legs should be straight and your arms extended behind your head. This will be your starting position. To perform the movement, tuck the knees toward your chest, rotating your pelvis to lift your glutes from the floor. As you do so, flex the spine, bringing your arms back over your head to perform a simultaneous crunch motion. After a brief pause, return to the starting position."
+      "muscle": "abdominales",
+      "equipment": "peso_corporal",
+      "difficulty": "intermedio",
+      "instructions": "Empezá acostado boca arriba en el piso. Las piernas deben estar extendidas y los brazos estirados por detrás de la cabeza. Esta es tu posición inicial. Para realizar el movimiento, llevá las rodillas hacia el pecho, rotando la pelvis para levantar los glúteos del piso. Al mismo tiempo, flexioná la columna llevando los brazos de vuelta por encima de la cabeza para hacer un crunch simultáneo. Después de una breve pausa, volvé a la posición inicial."
     }
   ],
   "HABILITADO": true,

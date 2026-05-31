@@ -4,84 +4,84 @@
   "DESCRIPCION": "rutina de biceps",
   "EJERCICIOS": [
     {
-      "name": "Incline Hammer Curls",
-      "type": "strength",
+      "name": "Curl martillo inclinado",
+      "type": "fuerza",
       "muscle": "biceps",
-      "equipment": "dumbbell",
-      "difficulty": "beginner",
-      "instructions": "Seat yourself on an incline bench with a dumbbell in each hand. You should pressed firmly against he back with your feet together. Allow the dumbbells to hang straight down at your side, holding them with a neutral grip. This will be your starting position. Initiate the movement by flexing at the elbow, attempting to keep the upper arm stationary. Continue to the top of the movement and pause, then slowly return to the start position."
+      "equipment": "mancuernas",
+      "difficulty": "principiante",
+      "instructions": "Sentate en un banco inclinado con una mancuerna en cada mano. Tenés que quedar bien apoyado contra el respaldo y con los pies juntos. Dejá que las mancuernas cuelguen rectas a los costados, sosteniéndolas con agarre neutro (palmas enfrentadas). Esta es tu posición inicial. Iniciá el movimiento flexionando el codo, tratando de mantener el brazo (la parte superior) inmóvil. Subí hasta el tope del recorrido y hacé una pausa, después volvé despacio a la posición inicial."
     },
     {
-      "name": "Wide-grip barbell curl",
-      "type": "strength",
+      "name": "Curl con barra agarre ancho",
+      "type": "fuerza",
       "muscle": "biceps",
-      "equipment": "barbell",
-      "difficulty": "beginner",
-      "instructions": "Stand up with your torso upright while holding a barbell at the wide outer handle. The palm of your hands should be facing forward. The elbows should be close to the torso. This will be your starting position. While holding the upper arms stationary, curl the weights forward while contracting the biceps as you breathe out. Tip: Only the forearms should move. Continue the movement until your biceps are fully contracted and the bar is at shoulder level. Hold the contracted position for a second and squeeze the biceps hard. Slowly begin to bring the bar back to starting position as your breathe in. Repeat for the recommended amount of repetitions.  Variations:  You can also perform this movement using an E-Z bar or E-Z attachment hooked to a low pulley. This variation seems to really provide a good contraction at the top of the movement. You may also use the closer grip for variety purposes."
+      "equipment": "barra",
+      "difficulty": "principiante",
+      "instructions": "Parate con el torso erguido sosteniendo una barra por la parte ancha externa del agarre. Las palmas deben mirar hacia adelante y los codos pegados al torso. Esta es tu posición inicial. Manteniendo los brazos quietos, levantá la barra hacia adelante contrayendo los bíceps mientras exhalás. Tip: solo deben moverse los antebrazos. Seguí el movimiento hasta que los bíceps estén totalmente contraídos y la barra quede a la altura de los hombros. Mantené la posición contraída un segundo y apretá fuerte los bíceps. Empezá a bajar la barra despacio a la posición inicial mientras inhalás. Repetí la cantidad de repeticiones recomendada. Variaciones: también podés hacer este movimiento con una barra Z o con un agarre Z enganchado a una polea baja. Esta variante parece dar una muy buena contracción arriba del recorrido. También podés usar un agarre más cerrado para variar."
     },
     {
-      "name": "EZ-bar spider curl",
-      "type": "strength",
+      "name": "Curl spider con barra Z",
+      "type": "fuerza",
       "muscle": "biceps",
-      "equipment": "barbell",
-      "difficulty": "intermediate",
-      "instructions": "Start out by setting the bar on the part of the preacher bench that you would normally sit on. Make sure to align the barbell properly so that it is balanced and will not fall off. Move to the front side of the preacher bench (the part where the arms usually lay) and position yourself to lay at a 45 degree slant with your torso and stomach pressed against the front side of the preacher bench. Make sure that your feet (especially the toes) are well positioned on the floor and place your upper arms on top of the pad located on the inside part of the preacher bench. Use your arms to grab the barbell with a supinated grip (palms facing up) at about shoulder width apart or slightly closer from each other. Slowly begin to lift the barbell upwards and exhale. Hold the contracted position for a second as you squeeze the biceps. Slowly begin to bring the barbell back to the starting position as your breathe in. . Repeat for the recommended amount of repetitions.  Variation: You can also use dumbbells when performing this exercise. Just make sure you place the dumbbells on the part of the preacher bench where you would normally sit properly."
+      "equipment": "barra",
+      "difficulty": "intermedio",
+      "instructions": "Empezá apoyando la barra sobre la parte del banco scott donde normalmente te sentarías. Asegurate de alinear bien la barra para que quede equilibrada y no se caiga. Pasate al frente del banco scott (la parte donde se apoyan los brazos) y ubicate de manera de quedar acostado con una inclinación de 45 grados, con el torso y el abdomen apoyados contra el frente del banco. Asegurate de que tus pies (sobre todo las puntas) queden bien apoyados en el piso y poné la parte superior de los brazos sobre el almohadón de la parte interna del banco scott. Tomá la barra con agarre supino (palmas hacia arriba) a la altura de los hombros o un poco más cerrado. Empezá a subir la barra despacio y exhalá. Mantené la posición contraída un segundo mientras apretás los bíceps. Empezá a bajar la barra despacio a la posición inicial mientras inhalás. Repetí la cantidad de repeticiones recomendada. Variación: también podés usar mancuernas para este ejercicio. Solo asegurate de apoyar las mancuernas sobre la parte del banco scott donde normalmente te sentarías."
     },
     {
-      "name": "Hammer Curls",
-      "type": "strength",
+      "name": "Curl martillo con mancuernas",
+      "type": "fuerza",
       "muscle": "biceps",
-      "equipment": "dumbbell",
-      "difficulty": "intermediate",
-      "instructions": "Stand up with your torso upright and a dumbbell on each hand being held at arms length. The elbows should be close to the torso. The palms of the hands should be facing your torso. This will be your starting position. Now, while holding your upper arm stationary, exhale and curl the weight forward while contracting the biceps. Continue to raise the weight until the biceps are fully contracted and the dumbbell is at shoulder level. Hold the contracted position for a brief moment as you squeeze the biceps. Tip: Focus on keeping the elbow stationary and only moving your forearm. After the brief pause, inhale and slowly begin the lower the dumbbells back down to the starting position. Repeat for the recommended amount of repetitions.  Variations: There are many possible variations for this movement. For instance, you can perform the exercise sitting down on a bench with or without back support and you can also perform it by alternating arms; first lift the right arm for one repetition, then the left, then the right, etc."
+      "equipment": "mancuernas",
+      "difficulty": "intermedio",
+      "instructions": "Parate con el torso erguido y una mancuerna en cada mano sostenidas a lo largo de los brazos. Los codos deben estar pegados al torso. Las palmas de las manos deben mirar hacia tu torso (agarre neutro). Esta es tu posición inicial. Ahora, manteniendo el brazo quieto, exhalá y subí el peso hacia adelante contrayendo los bíceps. Seguí subiendo hasta que los bíceps estén totalmente contraídos y la mancuerna quede a la altura del hombro. Mantené la posición contraída un instante apretando los bíceps. Tip: concentrate en mantener el codo quieto y mover solo el antebrazo. Después de la pausa breve, inhalá y empezá a bajar despacio las mancuernas a la posición inicial. Repetí la cantidad de repeticiones recomendada. Variaciones: hay muchas variantes posibles para este movimiento. Por ejemplo, podés hacerlo sentado en un banco con o sin respaldo, y también alternando los brazos: primero subís el brazo derecho una repetición, después el izquierdo, después el derecho, y así."
     },
     {
-      "name": "EZ-Bar Curl",
-      "type": "strength",
+      "name": "Curl con barra Z",
+      "type": "fuerza",
       "muscle": "biceps",
-      "equipment": "e-z_curl_bar",
-      "difficulty": "intermediate",
-      "instructions": "Stand up straight while holding an EZ curl bar at the wide outer handle. The palms of your hands should be facing forward and slightly tilted inward due to the shape of the bar. Keep your elbows close to your torso. This will be your starting position. Now, while keeping your upper arms stationary, exhale and curl the weights forward while contracting the biceps. Focus on only moving your forearms. Continue to raise the weight until your biceps are fully contracted and the bar is at shoulder level. Hold the top contracted position for a moment and squeeze the biceps. Then inhale and slowly lower the bar back to the starting position. Repeat for the recommended amount of repetitions.  Variations: You can also perform this movement using an E-Z attachment hooked to a low pulley. This variation seems to really provide a good contraction at the top of the movement. You may also use the closer grip for variety purposes."
+      "equipment": "barra_z",
+      "difficulty": "intermedio",
+      "instructions": "Parate derecho sosteniendo una barra Z por la parte ancha externa del agarre. Las palmas deben mirar hacia adelante y un poco inclinadas hacia adentro por la forma de la barra. Mantené los codos pegados al torso. Esta es tu posición inicial. Ahora, manteniendo los brazos quietos, exhalá y subí el peso hacia adelante contrayendo los bíceps. Concentrate en mover solo los antebrazos. Seguí subiendo hasta que los bíceps estén totalmente contraídos y la barra quede a la altura de los hombros. Mantené la posición contraída arriba un instante y apretá los bíceps. Después inhalá y bajá la barra despacio a la posición inicial. Repetí la cantidad de repeticiones recomendada. Variaciones: también podés hacer este movimiento con un agarre Z enganchado a una polea baja. Esta variante parece dar una muy buena contracción arriba del recorrido. También podés usar un agarre más cerrado para variar."
     },
     {
-      "name": "Zottman Curl",
-      "type": "strength",
+      "name": "Curl Zottman",
+      "type": "fuerza",
       "muscle": "biceps",
-      "equipment": "None",
-      "difficulty": "intermediate",
-      "instructions": "Stand up with your torso upright and a dumbbell in each hand being held at arms length. The elbows should be close to the torso. Make sure the palms of the hands are facing each other. This will be your starting position. While holding the upper arm stationary, curl the weights while contracting the biceps as you breathe out. Only the forearms should move. Your wrist should rotate so that you have a supinated (palms up) grip. Continue the movement until your biceps are fully contracted and the dumbbells are at shoulder level. Hold the contracted position for a second as you squeeze the biceps. Now during the contracted position, rotate your wrist until you now have a pronated (palms facing down) grip with the thumb at a higher position than the pinky. Slowly begin to bring the dumbbells back down using the pronated grip. As the dumbbells close your thighs, start rotating the wrist so that you go back to a neutral (palms facing your body) grip. Repeat for the recommended amount of repetitions."
+      "equipment": "otro",
+      "difficulty": "intermedio",
+      "instructions": "Parate con el torso erguido y una mancuerna en cada mano sostenidas a lo largo de los brazos. Los codos deben estar pegados al torso. Asegurate de que las palmas de las manos queden enfrentadas (agarre neutro). Esta es tu posición inicial. Manteniendo el brazo quieto, subí el peso contrayendo los bíceps mientras exhalás. Solo deben moverse los antebrazos. La muñeca debe rotar hasta quedar con agarre supino (palmas hacia arriba). Seguí el movimiento hasta que los bíceps estén totalmente contraídos y las mancuernas queden a la altura de los hombros. Mantené la posición contraída un segundo apretando los bíceps. Ahora, en la posición contraída, rotá la muñeca hasta quedar con agarre pronado (palmas hacia abajo), con el pulgar más alto que el meñique. Empezá a bajar las mancuernas despacio usando el agarre pronado. Cuando las mancuernas se acerquen a los muslos, empezá a rotar la muñeca para volver al agarre neutro (palmas hacia tu cuerpo). Repetí la cantidad de repeticiones recomendada."
     },
     {
-      "name": "Biceps curl to shoulder press",
-      "type": "strength",
+      "name": "Curl de bíceps con press de hombros",
+      "type": "fuerza",
       "muscle": "biceps",
-      "equipment": "dumbbell",
-      "difficulty": "beginner",
-      "instructions": "Begin in a standing position with a dumbbell in each hand. Your arms should be hanging at your sides with your palms facing forward. Look directly ahead, keeping your chest up, with your feet shoulder-width apart. This will be your starting position. Initiate the movement by flexing the elbows to curl the weight. Do not use momentum or flex through the shoulder, instead use a controlled motion. Execute the pressing movement by extending the arm, flexing and abducting the shoulder to rotate the arm as you press above your head. Pause at the top of the motion before reversing the movement to return to the starting position. Complete the desired number of repetitions before switching to the opposite side."
+      "equipment": "mancuernas",
+      "difficulty": "principiante",
+      "instructions": "Empezá de pie con una mancuerna en cada mano. Los brazos deben colgar a los costados con las palmas mirando hacia adelante. Mirá al frente, mantené el pecho arriba y los pies a la altura de los hombros. Esta es tu posición inicial. Iniciá el movimiento flexionando los codos para subir el peso (curl). No uses impulso ni flexiones desde el hombro; usá un movimiento controlado. Ejecutá el press extendiendo el brazo, flexionando y abriendo el hombro para rotar el brazo a medida que empujás por encima de la cabeza. Hacé una pausa arriba antes de invertir el movimiento para volver a la posición inicial. Completá la cantidad de repeticiones deseada antes de cambiar al lado opuesto."
     },
     {
-      "name": "Barbell Curl",
-      "type": "strength",
+      "name": "Curl con barra",
+      "type": "fuerza",
       "muscle": "biceps",
-      "equipment": "barbell",
-      "difficulty": "intermediate",
-      "instructions": "Stand up with your torso upright while holding a barbell at a shoulder-width grip. The palm of your hands should be facing forward and the elbows should be close to the torso. This will be your starting position. While holding the upper arms stationary, curl the weights forward while contracting the biceps as you breathe out. Tip: Only the forearms should move. Continue the movement until your biceps are fully contracted and the bar is at shoulder level. Hold the contracted position for a second and squeeze the biceps hard. Slowly begin to bring the bar back to starting position as your breathe in. Repeat for the recommended amount of repetitions.  Variations:  You can also perform this movement using a straight bar attachment hooked to a low pulley. This variation seems to really provide a good contraction at the top of the movement. You may also use the closer grip for variety purposes."
+      "equipment": "barra",
+      "difficulty": "intermedio",
+      "instructions": "Parate con el torso erguido sosteniendo una barra con un agarre al ancho de los hombros. Las palmas deben mirar hacia adelante y los codos pegados al torso. Esta es tu posición inicial. Manteniendo los brazos quietos, subí la barra hacia adelante contrayendo los bíceps mientras exhalás. Tip: solo deben moverse los antebrazos. Seguí el movimiento hasta que los bíceps estén totalmente contraídos y la barra quede a la altura de los hombros. Mantené la posición contraída un segundo y apretá fuerte los bíceps. Empezá a bajar la barra despacio a la posición inicial mientras inhalás. Repetí la cantidad de repeticiones recomendada. Variaciones: también podés hacer este movimiento con una barra recta enganchada a una polea baja. Esta variante parece dar una muy buena contracción arriba del recorrido. También podés usar un agarre más cerrado para variar."
     },
     {
-      "name": "Concentration curl",
-      "type": "strength",
+      "name": "Curl concentrado",
+      "type": "fuerza",
       "muscle": "biceps",
-      "equipment": "dumbbell",
-      "difficulty": "intermediate",
-      "instructions": "Sit down on a flat bench with one dumbbell in front of you between your legs. Your legs should be spread with your knees bent and feet on the floor. Use your right arm to pick the dumbbell up. Place the back of your right upper arm on the top of your inner right thigh. Rotate the palm of your hand until it is facing forward away from your thigh. Tip: Your arm should be extended and the dumbbell should be above the floor. This will be your starting position. While holding the upper arm stationary, curl the weights forward while contracting the biceps as you breathe out. Only the forearms should move. Continue the movement until your biceps are fully contracted and the dumbbells are at shoulder level. Tip: At the top of the movement make sure that the little finger of your arm is higher than your thumb. This guarantees a good contraction. Hold the contracted position for a second as you squeeze the biceps. Slowly begin to bring the dumbbells back to starting position as your breathe in. Caution: Avoid swinging motions at any time. Repeat for the recommended amount of repetitions. Then repeat the movement with the left arm.  Variations: This exercise can be performed standing with the torso bent forward and the arm in front of you. In this case, no leg support is used for the back of your arm so you will need to make extra effort to ensure no movement of the upper arm. This is a more challenging version of the exercise and is not recommended for people with lower back issues."
+      "equipment": "mancuernas",
+      "difficulty": "intermedio",
+      "instructions": "Sentate en un banco plano con una mancuerna frente a vos entre las piernas. Las piernas deben estar abiertas, con las rodillas flexionadas y los pies en el piso. Agarrá la mancuerna con el brazo derecho. Apoyá la parte de atrás del brazo derecho (la parte superior) sobre la cara interna del muslo derecho. Rotá la palma de la mano hasta que mire hacia adelante, lejos del muslo. Tip: el brazo debe estar extendido y la mancuerna por encima del piso. Esta es tu posición inicial. Manteniendo el brazo quieto, subí el peso hacia adelante contrayendo los bíceps mientras exhalás. Solo debe moverse el antebrazo. Seguí el movimiento hasta que los bíceps estén totalmente contraídos y la mancuerna quede a la altura del hombro. Tip: arriba del movimiento asegurate de que el meñique quede más alto que el pulgar. Esto garantiza una buena contracción. Mantené la posición contraída un segundo apretando los bíceps. Empezá a bajar la mancuerna despacio a la posición inicial mientras inhalás. Precaución: evitá los movimientos de balanceo en todo momento. Repetí la cantidad de repeticiones recomendada. Después repetí el movimiento con el brazo izquierdo. Variaciones: este ejercicio se puede hacer de pie, con el torso inclinado hacia adelante y el brazo por delante de vos. En ese caso no hay apoyo de la pierna para la parte de atrás del brazo, así que vas a tener que hacer un esfuerzo extra para que el brazo no se mueva. Es una versión más exigente del ejercicio y no se recomienda para personas con problemas en la zona lumbar."
     },
     {
-      "name": "Flexor Incline Dumbbell Curls",
-      "type": "strength",
+      "name": "Curl flexor en banco inclinado con mancuernas",
+      "type": "fuerza",
       "muscle": "biceps",
-      "equipment": "dumbbell",
-      "difficulty": "beginner",
-      "instructions": "Hold the dumbbell towards the side farther from you so that you have more weight on the side closest to you. (This can be done for a good effect on all bicep dumbbell exercises). Now do a normal incline dumbbell curl, but keep your wrists as far back as possible so as to neutralize any stress that is placed on them. Sit on an incline bench that is angled at 45-degrees while holding a dumbbell on each hand. Let your arms hang down on your sides, with the elbows in, and turn the palms of your hands forward with the thumbs pointing away from the body. Tip: You will keep this hand position throughout the movement as there should not be any twisting of the hands as they come up. This will be your starting position. Curl up the two dumbbells at the same time until your biceps are fully contracted and exhale. Tip: Do not swing the arms or use momentum. Keep a controlled motion at all times. Hold the contracted position for a second at the top. As you inhale, slowly go back to the starting position. Repeat for the recommended amount of repetitions.  Caution: Do not extend your arms totally as you could injure your elbows if you hyperextend them. Also, make sure that on the way down you move slowly to avoid injury. Variations: You can use cables for this movement as well."
+      "equipment": "mancuernas",
+      "difficulty": "principiante",
+      "instructions": "Sostené la mancuerna hacia el lado más alejado de vos, de manera de tener más peso del lado más cercano a vos. (Esto se puede hacer con buen efecto en todos los ejercicios de bíceps con mancuernas). Ahora hacé un curl inclinado con mancuernas normal, pero mantené las muñecas lo más hacia atrás posible para neutralizar cualquier tensión que se les ponga encima. Sentate en un banco inclinado a 45 grados sosteniendo una mancuerna en cada mano. Dejá que los brazos cuelguen a los costados, con los codos hacia adentro, y girá las palmas hacia adelante con los pulgares apuntando lejos del cuerpo. Tip: vas a mantener esta posición de la mano durante todo el movimiento, no debe haber ninguna rotación de las manos a medida que suben. Esta es tu posición inicial. Subí las dos mancuernas al mismo tiempo hasta que los bíceps estén totalmente contraídos y exhalá. Tip: no balancees los brazos ni uses impulso. Mantené un movimiento controlado en todo momento. Mantené la posición contraída un segundo arriba. Mientras inhalás, volvé despacio a la posición inicial. Repetí la cantidad de repeticiones recomendada. Precaución: no extiendas los brazos por completo porque podés lesionarte los codos si los hiperextendés. Además, asegurate de bajar despacio para evitar lesiones. Variaciones: también podés usar poleas para este movimiento."
     }
   ],
   "HABILITADO": true,

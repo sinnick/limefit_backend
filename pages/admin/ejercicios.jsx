@@ -350,9 +350,9 @@ export default function EjerciciosPage() {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="none">—</SelectItem>
-                        <SelectItem value="beginner">Principiante</SelectItem>
-                        <SelectItem value="intermediate">Intermedio</SelectItem>
-                        <SelectItem value="advanced">Avanzado</SelectItem>
+                        <SelectItem value="principiante">Principiante</SelectItem>
+                        <SelectItem value="intermedio">Intermedio</SelectItem>
+                        <SelectItem value="avanzado">Avanzado</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
