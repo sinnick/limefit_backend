@@ -18,23 +18,29 @@ function runMiddleware(req, res, fn) {
     })
 }
 
+// Body crudo (bodyParser de Next desactivado): funciona con cualquier Content-Type
+// (app mobile application/json, web text/plain) sin depender del parseo de Turbopack.
+export const config = { api: { bodyParser: false } };
 
+async function readJsonBody(req) {
+    const chunks = [];
+    for await (const chunk of req) chunks.push(chunk);
+    const raw = Buffer.concat(chunks).toString("utf8").trim();
+    return raw ? JSON.parse(raw) : {};
+}
 
 export default async function handler(req, res) {
-    await runMiddleware(req, res, cors)
-    console.log('list records', req.body);
-    dbConnect();
-    let body = JSON.parse(req.body);
-    let { dni } = body;
-    console.log("list records DNI consultado: ", dni);
     try {
+        await runMiddleware(req, res, cors)
+        await dbConnect();
+        const { dni } = await readJsonBody(req);
+        console.log("list records DNI consultado: ", dni);
         let filter = { "DNI": dni, "GYM_ID": activeTenant.gymId };
         console.log("filter", filter);
         let result_records = await Record.find(filter);
-        console.log({ result_records});
         res.status(200).json({ status: "ok", result_records });
     } catch (error) {
-        console.log(error);
-        res.status(500).json(error);
+        console.log('RECORDS LIST ERROR:', error);
+        res.status(500).json({ error: String(error && error.message || error) });
     }
 }

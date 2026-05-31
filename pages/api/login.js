@@ -19,27 +19,33 @@ function runMiddleware(req, res, fn) {
   })
 }
 
+// Desactivamos el bodyParser de Next y leemos el body crudo, así el endpoint
+// funciona con cualquier Content-Type (la app mobile manda application/json,
+// el cliente web text/plain) y es inmune a los quirks de parseo de Turbopack.
+export const config = { api: { bodyParser: false } };
 
+async function readJsonBody(req) {
+  const chunks = [];
+  for await (const chunk of req) chunks.push(chunk);
+  const raw = Buffer.concat(chunks).toString("utf8").trim();
+  return raw ? JSON.parse(raw) : {};
+}
 
 export default async function handler(req, res) {
-  await runMiddleware(req, res, cors)
-  console.log('aca', req.body);
-  dbConnect();
-  // res.status(200).json({ status: "ok" });
-  let body = JSON.parse(req.body);
-  let { dni } = body;
-  console.log("DNI consultado: ", dni);
   try {
+    await runMiddleware(req, res, cors)
+    await dbConnect();
+    const { dni } = await readJsonBody(req);
+    console.log("DNI consultado: ", dni);
     let filter = { "DNI": dni, "GYM_ID": activeTenant.gymId };
     console.log("filter", filter);
     let user = await Usuario.findOne(filter);
     console.log("user", user);
     res.status(200).json({ status: "ok", user: user });
   } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
+    console.log('LOGIN ERROR:', error);
+    res.status(500).json({ error: String(error && error.message || error) });
   }
-
 }
 
 
