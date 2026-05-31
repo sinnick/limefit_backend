@@ -23,6 +23,10 @@ import {
   Zap,
   Activity,
   Download,
+  CreditCard,
+  Clock,
+  LogIn,
+  Bell,
 } from "lucide-react"
 import { activeTenant, apiPath } from "@/config/tenant"
 
@@ -61,6 +65,10 @@ export default function AdminLayout({ children }) {
     { href: "/admin/ejercicios", label: "Ejercicios", icon: Zap },
     { href: "/admin/socios", label: "Socios", icon: Activity },
     { href: "/admin/reportes", label: "Reportes", icon: Download },
+    { href: "/admin/membresias", label: "Membresías", icon: CreditCard },
+    { href: "/admin/clases", label: "Clases", icon: Clock },
+    { href: "/admin/acceso", label: "Acceso", icon: LogIn },
+    { href: "/admin/anuncios", label: "Anuncios", icon: Bell },
   ]
 
   return (
@@ -141,7 +149,7 @@ export default function AdminLayout({ children }) {
 
       {/* Mobile Navigation - Fixed tabs */}
       <div className="md:hidden border-b bg-card">
-        <div className="grid grid-cols-7">
+        <div className="grid grid-cols-4">
           {navItems.map((item) => {
             const Icon = item.icon
             const isActive = router.pathname === item.href
