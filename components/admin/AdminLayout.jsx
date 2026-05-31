@@ -80,15 +80,11 @@ export default function AdminLayout({ children }) {
   const Logo = () => (
     <div className="flex items-center gap-2 min-w-0">
       {activeTenant.logo ? (
-        <>
-          <img src={apiPath(activeTenant.logo)} alt={activeTenant.name} className="h-7 w-auto" />
-          <span className="text-base font-bold text-muted-foreground">{activeTenant.adminSuffix.trim()}</span>
-        </>
+        <img src={apiPath(activeTenant.logo)} alt={activeTenant.name} className="h-7 w-auto" />
       ) : (
         <h1 className="text-lg font-bold truncate">
           <span className="text-primary">{activeTenant.logoPrimary}</span>
           {activeTenant.logoRest}
-          <span className="text-muted-foreground">{activeTenant.adminSuffix}</span>
         </h1>
       )}
     </div>
