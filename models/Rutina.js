@@ -58,6 +58,16 @@ const schema = mongoose.Schema({
   "DIFICULTAD": { type: Number, default: 3 }, // 1-5
   "NIVEL": { type: String, default: "medio" },
   "IMAGEN": { type: String, default: "" },
+
+  // ── Fase 5.3: Marketplace de rutinas (aditivo) ──────────────────────────────
+  // COMPARTIDA: la rutina es visible en el catálogo cross-gym de otros gyms.
+  "COMPARTIDA": { type: Boolean, default: false },
+  // ORIGEN_GYM: GYM_ID del gym que creó la rutina original (atribución al clonar).
+  // Vacío en rutinas creadas localmente; se setea SOLO en clones.
+  "ORIGEN_GYM": { type: String, default: "" },
+  // ORIGEN_NOMBRE: nombre legible del gym origen (para mostrar en UI al clonar).
+  "ORIGEN_NOMBRE": { type: String, default: "" },
+
   "GYM_ID": { type: String, index: true },
 });
 
