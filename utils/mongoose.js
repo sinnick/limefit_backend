@@ -14,7 +14,9 @@ async function dbConnect() {
         useUnifiedTopology: true
     });
     conn.isConnected = db.connections[0].readyState;
-    console.log('MongoDB connected, DB:', db.connection.db.databaseName);
+    // Acceso seguro: en cold-start db.connection.db puede no estar listo todavía;
+    // sin el optional chaining, leer .databaseName tiraba y devolvía 500.
+    console.log('MongoDB connected, DB:', db.connection?.db?.databaseName ?? '(conectando)');
 }
 
 export default dbConnect;
