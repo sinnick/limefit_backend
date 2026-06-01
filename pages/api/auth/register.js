@@ -1,6 +1,7 @@
 import dbConnect from "@/utils/mongoose"
 import Usuario from "@/models/Usuario"
 import bcrypt from "bcryptjs"
+import { activeTenant } from "@/config/tenant"
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -9,6 +10,7 @@ export default async function handler(req, res) {
 
   try {
     await dbConnect()
+    const GYM_ID = activeTenant.gymId
 
     const { dni, usuario, password, nombre, apellido, email } = req.body
 
@@ -17,8 +19,9 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Todos los campos son obligatorios" })
     }
 
-    // Check if user already exists
+    // Check if user already exists (scoped to tenant)
     const existingUser = await Usuario.findOne({
+      GYM_ID,
       $or: [
         { DNI: parseInt(dni) },
         { USUARIO: usuario.toLowerCase() },
@@ -52,6 +55,7 @@ export default async function handler(req, res) {
       HABILITADO: true,
       ADMIN: false,
       FECHA_CREACION: new Date(),
+      GYM_ID,
     })
 
     return res.status(201).json({

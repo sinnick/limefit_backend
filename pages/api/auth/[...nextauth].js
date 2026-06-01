@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import dbConnect from "@/utils/mongoose"
 import Usuario from "@/models/Usuario"
 import bcrypt from "bcryptjs"
+import { activeTenant } from "@/config/tenant"
 
 export const authOptions = {
   providers: [
@@ -16,8 +17,9 @@ export const authOptions = {
         try {
           await dbConnect()
 
-          // Find user by username or DNI
+          // Find user by username or DNI (scoped to tenant)
           const user = await Usuario.findOne({
+            GYM_ID: activeTenant.gymId,
             $or: [
               { USUARIO: credentials.username },
               { DNI: parseInt(credentials.username) || 0 }
@@ -46,6 +48,7 @@ export const authOptions = {
             name: `${user.NOMBRE} ${user.APELLIDO}`,
             email: user.EMAIL,
             admin: user.ADMIN,
+            rol: user.ROL,
             image: user.FOTO
           }
         } catch (error) {
@@ -65,7 +68,9 @@ export const authOptions = {
       options: {
         httpOnly: true,
         sameSite: "lax",
-        path: "/",
+        // Scope al basePath del tenant para evitar colisión de cookies si dos
+        // tenants comparten host.
+        path: activeTenant.basePath || "/",
         secure: true,
       },
     },
@@ -76,6 +81,7 @@ export const authOptions = {
         token.dni = user.dni
         token.username = user.username
         token.admin = user.admin
+        token.rol = user.rol
       }
       return token
     },
@@ -84,6 +90,7 @@ export const authOptions = {
         session.user.dni = token.dni
         session.user.username = token.username
         session.user.admin = token.admin
+        session.user.rol = token.rol
       }
       return session
     }

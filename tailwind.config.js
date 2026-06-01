@@ -65,10 +65,21 @@ module.exports = {
           950: '#1a2e05',
         },
       },
+      fontFamily: {
+        // var(--font-body/heading) las define el tenant en _document.js; si no
+        // existen, globals.css :root provee un default de sistema.
+        sans: ["var(--font-body)"],
+        heading: ["var(--font-heading)"],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        // Glow rojo de marca de Level Gym (sello visual del sitio original).
+        glow: "0 15px 30px -5px hsl(var(--primary) / 0.45)",
+        "glow-sm": "0 8px 20px -6px hsl(var(--primary) / 0.4)",
       },
       keyframes: {
         "accordion-down": {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import AdminLayout from "@/components/admin/AdminLayout"
+import { apiPath } from "@/config/tenant"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -47,9 +48,9 @@ export default function AssignmentsPage() {
   async function fetchData() {
     try {
       const [assignmentsRes, usersRes, routinesRes] = await Promise.all([
-        fetch("/limefit/api/admin/assignments"),
-        fetch("/limefit/api/admin/users"),
-        fetch("/limefit/api/admin/routines")
+        fetch(apiPath("/api/admin/assignments")),
+        fetch(apiPath("/api/admin/users")),
+        fetch(apiPath("/api/admin/routines"))
       ])
 
       const assignmentsData = await assignmentsRes.json()
@@ -101,7 +102,7 @@ export default function AssignmentsPage() {
 
     try {
       const method = editingAssignment ? "PUT" : "POST"
-      const res = await fetch("/limefit/api/admin/assignments", {
+      const res = await fetch(apiPath("/api/admin/assignments"), {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -137,7 +138,7 @@ export default function AssignmentsPage() {
     if (!confirm("¿Estás seguro de eliminar esta asignación?")) return
 
     try {
-      const res = await fetch(`/api/admin/assignments?id=${id}`, {
+      const res = await fetch(apiPath(`/api/admin/assignments?id=${id}`), {
         method: "DELETE"
       })
 

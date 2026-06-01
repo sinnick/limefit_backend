@@ -4,6 +4,7 @@ import Usuario from "@/models/Usuario"
 import Rutina from "@/models/Rutina"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]"
+import { activeTenant } from "@/config/tenant"
 
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions)
@@ -14,12 +15,13 @@ export default async function handler(req, res) {
   }
 
   await dbConnect()
+  const GYM_ID = activeTenant.gymId
 
   if (req.method === "GET") {
     try {
       const { dni } = req.query
 
-      let query = {}
+      let query = { GYM_ID }
       if (dni) {
         query.DNI = parseInt(dni)
       }
@@ -29,8 +31,8 @@ export default async function handler(req, res) {
       // Populate with user and routine data
       const enrichedAssignments = await Promise.all(
         assignments.map(async (assignment) => {
-          const user = await Usuario.findOne({ DNI: assignment.DNI }).select('DNI NOMBRE APELLIDO EMAIL')
-          const routine = await Rutina.findOne({ ID: assignment.RUTINA_ID }).select('ID NOMBRE DESCRIPCION NIVEL')
+          const user = await Usuario.findOne({ DNI: assignment.DNI, GYM_ID }).select('DNI NOMBRE APELLIDO EMAIL')
+          const routine = await Rutina.findOne({ ID: assignment.RUTINA_ID, GYM_ID }).select('ID NOMBRE DESCRIPCION NIVEL')
 
           return {
             ...assignment.toObject(),
@@ -51,19 +53,20 @@ export default async function handler(req, res) {
       const { DNI, RUTINA_ID, NOTAS, FECHA_INICIO, FECHA_FIN } = req.body
 
       // Verify user exists
-      const user = await Usuario.findOne({ DNI })
+      const user = await Usuario.findOne({ DNI, GYM_ID })
       if (!user) {
         return res.status(404).json({ error: "Usuario no encontrado" })
       }
 
       // Verify routine exists
-      const routine = await Rutina.findOne({ ID: RUTINA_ID })
+      const routine = await Rutina.findOne({ ID: RUTINA_ID, GYM_ID })
       if (!routine) {
         return res.status(404).json({ error: "Rutina no encontrada" })
       }
 
       // Check if active assignment already exists
       const existingAssignment = await UsuarioRutina.findOne({
+        GYM_ID,
         DNI,
         RUTINA_ID,
         ACTIVA: true
@@ -74,6 +77,7 @@ export default async function handler(req, res) {
       }
 
       const newAssignment = await UsuarioRutina.create({
+        GYM_ID,
         DNI,
         RUTINA_ID,
         ASIGNADO_POR: session.user.username,
@@ -94,8 +98,8 @@ export default async function handler(req, res) {
     try {
       const { id, ACTIVA, FECHA_FIN, NOTAS } = req.body
 
-      const updatedAssignment = await UsuarioRutina.findByIdAndUpdate(
-        id,
+      const updatedAssignment = await UsuarioRutina.findOneAndUpdate(
+        { _id: id, GYM_ID },
         {
           ACTIVA,
           FECHA_FIN,
@@ -118,7 +122,7 @@ export default async function handler(req, res) {
     try {
       const { id } = req.query
 
-      const deletedAssignment = await UsuarioRutina.findByIdAndDelete(id)
+      const deletedAssignment = await UsuarioRutina.findOneAndDelete({ _id: id, GYM_ID })
 
       if (!deletedAssignment) {
         return res.status(404).json({ error: "Asignación no encontrada" })

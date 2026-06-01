@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dumbbell, Loader2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { activeTenant, apiPath } from "@/config/tenant"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -44,7 +45,7 @@ export default function LoginPage() {
           description: "Redirigiendo..."
         })
         // Force a full page reload to /admin to ensure session is picked up
-        window.location.href = "/limefit/admin"
+        window.location.href = apiPath("/admin")
       }
     } catch (error) {
       console.error("Login error:", error)
@@ -62,14 +63,24 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-            <Dumbbell className="w-8 h-8 text-primary" />
-          </div>
-          <h1 className="text-4xl font-bold tracking-tight mb-2">
-            <span className="text-primary">LIME</span>FIT
-          </h1>
+          {activeTenant.logo ? (
+            <img
+              src={apiPath(activeTenant.logo)}
+              alt={activeTenant.name}
+              className="h-14 w-auto mx-auto mb-4"
+            />
+          ) : (
+            <>
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
+                <Dumbbell className="w-8 h-8 text-primary" />
+              </div>
+              <h1 className="text-4xl font-bold tracking-tight mb-2">
+                <span className="text-primary">{activeTenant.logoPrimary}</span>{activeTenant.logoRest}
+              </h1>
+            </>
+          )}
           <p className="text-muted-foreground">
-            Sistema de Gestión de Gimnasio
+            {activeTenant.subtitle}
           </p>
         </div>
 
@@ -135,7 +146,7 @@ export default function LoginPage() {
 
         <div className="mt-8 text-center">
           <p className="text-xs text-muted-foreground">
-            LimeFit Gym Management System © 2024
+            {activeTenant.copyright}
           </p>
         </div>
       </div>

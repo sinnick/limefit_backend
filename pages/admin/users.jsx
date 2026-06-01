@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import AdminLayout from "@/components/admin/AdminLayout"
+import { apiPath } from "@/config/tenant"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -46,6 +47,7 @@ export default function UsersPage() {
     EMAIL: "",
     SEXO: "M",
     ADMIN: false,
+    ROL: "usuario",
     HABILITADO: true
   })
   const { toast } = useToast()
@@ -56,7 +58,7 @@ export default function UsersPage() {
 
   async function fetchUsers() {
     try {
-      const res = await fetch("/limefit/api/admin/users")
+      const res = await fetch(apiPath("/api/admin/users"))
       const data = await res.json()
       setUsers(data)
     } catch (error) {
@@ -82,6 +84,7 @@ export default function UsersPage() {
         EMAIL: user.EMAIL,
         SEXO: user.SEXO,
         ADMIN: user.ADMIN,
+        ROL: user.ROL || "usuario",
         HABILITADO: user.HABILITADO
       })
     } else {
@@ -95,6 +98,7 @@ export default function UsersPage() {
         EMAIL: "",
         SEXO: "M",
         ADMIN: false,
+        ROL: "usuario",
         HABILITADO: true
       })
     }
@@ -106,7 +110,7 @@ export default function UsersPage() {
 
     try {
       const method = editingUser ? "PUT" : "POST"
-      const res = await fetch("/limefit/api/admin/users", {
+      const res = await fetch(apiPath("/api/admin/users"), {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
@@ -138,7 +142,7 @@ export default function UsersPage() {
     if (!confirm("¿Estás seguro de eliminar este usuario?")) return
 
     try {
-      const res = await fetch(`/api/admin/users?dni=${dni}`, {
+      const res = await fetch(apiPath(`/api/admin/users?dni=${dni}`), {
         method: "DELETE"
       })
 
@@ -403,6 +407,24 @@ export default function UsersPage() {
                       </SelectContent>
                     </Select>
                   </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="ROL">Rol / Permisos</Label>
+                  <Select
+                    value={formData.ROL}
+                    onValueChange={(value) => setFormData({ ...formData, ROL: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="dueno">Dueño</SelectItem>
+                      <SelectItem value="admin">Admin</SelectItem>
+                      <SelectItem value="entrenador">Entrenador</SelectItem>
+                      <SelectItem value="recepcion">Recepción</SelectItem>
+                      <SelectItem value="usuario">Usuario</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
               <DialogFooter>

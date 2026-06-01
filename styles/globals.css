@@ -24,6 +24,11 @@
     --input: 240 5.9% 90%;
     --ring: 84 81% 44%;  /* Lime green ring */
     --radius: 0.5rem;
+    /* Fuentes: default de sistema. Los tenants con `fonts` las sobrescriben
+       en _document.js (ej. Level → Rajdhani / Bebas Neue). Deben estar
+       siempre definidas porque tailwind usa var(--font-*) sin fallback. */
+    --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-heading: var(--font-body);
   }
 
   .dark {
@@ -54,6 +59,22 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
+  /* Títulos usan la fuente display del tenant (--font-heading). Para tenants
+     sin fuente custom, --font-heading == --font-body → sin cambios visuales. */
+  h1, h2, h3 {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Estética Level Gym: títulos display en mayúsculas, condensados y ceñidos,
+   replicando los headlines de levelgym.com.ar. Scoped a .theme-level para no
+   afectar a otros tenants (LimeFit conserva su tipografía). */
+.theme-level h1,
+.theme-level h2,
+.theme-level h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
 }

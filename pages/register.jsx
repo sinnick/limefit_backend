@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
+import { activeTenant, apiPath } from "@/config/tenant"
 
 export default function Register() {
   const router = useRouter()
@@ -50,7 +51,7 @@ export default function Register() {
     setLoading(true)
 
     try {
-      const res = await fetch("/limefit/api/auth/register", {
+      const res = await fetch(apiPath("/api/auth/register"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -91,13 +92,23 @@ export default function Register() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 px-4 py-8">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-            <Dumbbell className="w-8 h-8 text-primary" />
-          </div>
-          <h1 className="text-4xl font-bold tracking-tight mb-2">
-            <span className="text-primary">LIME</span>FIT
-          </h1>
-          <p className="text-muted-foreground">Crear nueva cuenta</p>
+          {activeTenant.logo ? (
+            <img
+              src={apiPath(activeTenant.logo)}
+              alt={activeTenant.name}
+              className="h-14 w-auto mx-auto mb-4"
+            />
+          ) : (
+            <>
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
+                <Dumbbell className="w-8 h-8 text-primary" />
+              </div>
+              <h1 className="text-4xl font-bold tracking-tight mb-2">
+                <span className="text-primary">{activeTenant.logoPrimary}</span>{activeTenant.logoRest}
+              </h1>
+            </>
+          )}
+          <p className="text-muted-foreground">{activeTenant.registerSubtitle}</p>
         </div>
 
         <Card className="border-2">
