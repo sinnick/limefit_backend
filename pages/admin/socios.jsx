@@ -2,11 +2,22 @@ import { useState, useEffect } from "react"
 import AdminLayout from "@/components/admin/AdminLayout"
 import { apiPath } from "@/config/tenant"
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { MetricLineChart } from "@/components/admin/Charts"
 import { useToast } from "@/hooks/use-toast"
-import { Search, Activity, Trophy, Dumbbell, LineChart, User } from "lucide-react"
+import { Search, Activity, Trophy, Dumbbell, LineChart, User, UserPlus } from "lucide-react"
 
 // 3.3 + 3.6 — Panel de progreso por socio.
 // Buscador de socio (DNI o nombre) → fetch a /api/admin/progreso?dni= y
@@ -18,7 +29,54 @@ export default function SociosPage() {
   const [progreso, setProgreso] = useState(null)
   const [adherencia, setAdherencia] = useState(null)
   const [loadingData, setLoadingData] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [form, setForm] = useState({ DNI: "", NOMBRE: "", APELLIDO: "", EMAIL: "" })
+  const [saving, setSaving] = useState(false)
   const { toast } = useToast()
+
+  // Alta de socio: usuario de la app (login solo-DNI), sin USUARIO ni PASSWORD.
+  // Reutiliza POST /api/admin/users, que setea ADMIN:false, HABILITADO:true y el
+  // GYM_ID del tenant.
+  async function handleCreate(e) {
+    e.preventDefault()
+    const dni = parseInt(String(form.DNI).trim(), 10)
+    if (!dni || !form.NOMBRE.trim()) {
+      toast({
+        title: "Faltan datos",
+        description: "El DNI y el nombre son obligatorios",
+        variant: "destructive",
+      })
+      return
+    }
+    setSaving(true)
+    try {
+      const res = await fetch(apiPath("/api/admin/users"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          DNI: dni,
+          NOMBRE: form.NOMBRE.trim(),
+          APELLIDO: form.APELLIDO.trim(),
+          EMAIL: form.EMAIL.trim(),
+          ADMIN: false,
+          ROL: "usuario",
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "No se pudo crear el socio")
+      toast({
+        title: "Socio creado",
+        description: `${data.NOMBRE} ${data.APELLIDO || ""} — DNI ${data.DNI}. Ya puede entrar a la app con su DNI.`,
+      })
+      setUsers((prev) => [...prev, data])
+      setForm({ DNI: "", NOMBRE: "", APELLIDO: "", EMAIL: "" })
+      setDialogOpen(false)
+    } catch (error) {
+      toast({ title: "Error", description: error.message, variant: "destructive" })
+    } finally {
+      setSaving(false)
+    }
+  }
 
   useEffect(() => {
     async function fetchUsers() {
@@ -88,11 +146,79 @@ export default function SociosPage() {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Socios</h1>
-          <p className="text-muted-foreground">
-            Progreso y adherencia por socio
-          </p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">Socios</h1>
+            <p className="text-muted-foreground">
+              Alta de socios, progreso y adherencia
+            </p>
+          </div>
+
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <UserPlus className="h-4 w-4 mr-2" /> Nuevo socio
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Nuevo socio</DialogTitle>
+                <DialogDescription>
+                  Se da de alta un usuario de la app. Entra solo con su DNI (sin contraseña).
+                </DialogDescription>
+              </DialogHeader>
+              <form onSubmit={handleCreate} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="socio-dni">DNI *</Label>
+                  <Input
+                    id="socio-dni"
+                    inputMode="numeric"
+                    placeholder="Ej. 40123456"
+                    value={form.DNI}
+                    onChange={(e) =>
+                      setForm((f) => ({ ...f, DNI: e.target.value.replace(/\D/g, "") }))
+                    }
+                    autoFocus
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="socio-nombre">Nombre *</Label>
+                    <Input
+                      id="socio-nombre"
+                      placeholder="Nombre"
+                      value={form.NOMBRE}
+                      onChange={(e) => setForm((f) => ({ ...f, NOMBRE: e.target.value }))}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="socio-apellido">Apellido</Label>
+                    <Input
+                      id="socio-apellido"
+                      placeholder="Apellido"
+                      value={form.APELLIDO}
+                      onChange={(e) => setForm((f) => ({ ...f, APELLIDO: e.target.value }))}
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="socio-email">Email (opcional)</Label>
+                  <Input
+                    id="socio-email"
+                    type="email"
+                    placeholder="socio@email.com"
+                    value={form.EMAIL}
+                    onChange={(e) => setForm((f) => ({ ...f, EMAIL: e.target.value }))}
+                  />
+                </div>
+                <DialogFooter>
+                  <Button type="submit" disabled={saving}>
+                    {saving ? "Guardando..." : "Crear socio"}
+                  </Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
         </div>
 
         {/* Buscador de socio */}

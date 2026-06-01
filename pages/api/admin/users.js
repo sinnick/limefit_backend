@@ -29,18 +29,18 @@ export default async function handler(req, res) {
     try {
       const { DNI, USUARIO, PASSWORD, NOMBRE, APELLIDO, EMAIL, SEXO, ADMIN, ROL } = req.body
 
-      // Check if user already exists (scoped to tenant)
-      const existingUser = await Usuario.findOne({
-        GYM_ID,
-        $or: [{ DNI }, { USUARIO }]
-      })
+      // Unicidad por tenant: siempre por DNI; por USUARIO solo si viene (los
+      // socios se crean sin USUARIO/PASSWORD — login móvil es solo-DNI).
+      const orUnico = [{ DNI }]
+      if (USUARIO) orUnico.push({ USUARIO })
+      const existingUser = await Usuario.findOne({ GYM_ID, $or: orUnico })
 
       if (existingUser) {
         return res.status(400).json({ error: "Usuario o DNI ya existe" })
       }
 
-      // Hash password
-      const hashedPassword = await bcrypt.hash(PASSWORD, 10)
+      // Password opcional: solo se hashea si viene (los socios no tienen).
+      const hashedPassword = PASSWORD ? await bcrypt.hash(PASSWORD, 10) : undefined
 
       const newUser = await Usuario.create({
         DNI,
